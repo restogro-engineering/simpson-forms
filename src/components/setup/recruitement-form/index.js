@@ -252,7 +252,7 @@ const RecruitmentForm = () => {
             setApprovalDEtails({
               status,
               comments,
-              file: URL.createObjectURL(file),
+              file: file ? URL.createObjectURL(file) : '',
             });
             setOpenModal(false);
           }}
