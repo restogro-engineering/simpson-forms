@@ -72,7 +72,7 @@ const RecruitmentForm2 = () => {
   };
 
   return (
-    <div className='recruitment-form-container' id="request-form">
+    <div className='recruitment-form-container' id='request-form'>
       <div className='form-row'>
         <div>Simpson & Co Ltd., </div>
         <div>Chennai - 600002 </div>
@@ -181,16 +181,19 @@ const RecruitmentForm2 = () => {
             />
           </div>
         </div>
-      </div>
+      </div>      
       <div className='form-center'>
         <span className='u-text'>FITMENT PROPOSED</span>
       </div>
       <div className='f-text-area'>
         <span>
-          Based on his Qualification and experience, can be taken as{' '}
-          <TextField size='small' variant='standard' /> on probation for a
-          period of six months. After completion of his probation period, based
-          on his performance, can be taken into company’s roll
+          Based on his Qualification and experience, can be taken as
+          <div>
+            <TextField size='small' variant='standard' fullWidth />            
+          </div>
+          on probation for a period of six months. After completion of his
+          probation period, based on his performance, can be taken into
+          company’s roll
         </span>
       </div>
       <div className='fitment-details-table'>
