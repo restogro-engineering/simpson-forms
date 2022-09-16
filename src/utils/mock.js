@@ -32,6 +32,13 @@ export const APPROVAL_LIST = [
 
     fee: 'Nil.  Ref. by Mr. R. Harinarayanan, Sr. Engineer, MCD Emp. No : 10094.',
     approvedBy: '',
+    basic: 100,
+    hra: 100,
+    conveyanceAllowance: 100,
+    educationAllowance: 100,
+    specialAllowance: 100,
+    leaveTravelAllowance: 100,
+    medicalAllowance: 100,
   },
   {
     id: 2,
@@ -64,5 +71,12 @@ export const APPROVAL_LIST = [
       'First Year  :  Rs.21,500/- per month , Second Year    :  Rs.25,000/- per Month',
     fee: 'Nil.  Ref. by Mr. R. Harinarayanan, Sr. Engineer, MCD Emp. No : 10094.',
     approvedBy: '',
+    basic: 100,
+    hra: 100,
+    conveyanceAllowance: 100,
+    educationAllowance: 100,
+    specialAllowance: 100,
+    leaveTravelAllowance: 100,
+    medicalAllowance: 100,
   },
 ];

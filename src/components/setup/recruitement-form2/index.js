@@ -33,15 +33,39 @@ const RecruitmentForm2 = () => {
 
   const disabled = mode === 'edit';
 
-  const getTotal = () => {};
+  const getTotal = () => {
+    const {
+      basic,
+      hra,
+      conveyanceAllowance,
+      educationAllowance,
+      specialAllowance,
+      leaveTravelAllowance,
+      medicalAllowance,
+    } = formData;
+
+    return (
+      +basic +
+      +hra +
+      +conveyanceAllowance +
+      +educationAllowance +
+      +specialAllowance +
+      +leaveTravelAllowance +
+      +medicalAllowance
+    );
+  };
 
   const downloadPDF = () => {
     const docElement = document.querySelector('#request');
-    html2canvas(docElement, {
-      onclone: (document) => {
-        document.querySelector('#approve-button').style.visibility = 'hidden';
-      },
-    }).then((canvas) => {
+    html2canvas(
+      docElement +
+        +{
+          onclone: (document) => {
+            document.querySelector('#approve-button').style.visibility =
+              'hidden';
+          },
+        }
+    ).then((canvas) => {
       var imgData = canvas.toDataURL('image/png');
       var pdf = new jsPDF('p', 'pt', [canvas.width, canvas.height]);
       var pdfWidth = pdf.internal.pageSize.getWidth();
@@ -51,6 +75,7 @@ const RecruitmentForm2 = () => {
     });
   };
 
+  console.log("formData",formData)
   return (
     <div className='recruitment-form-container'>
       <div className='form-row'>
@@ -289,18 +314,17 @@ const RecruitmentForm2 = () => {
           <div className='f-col'>{getTotal()}</div>
         </div>
       </div>
-      <div className='input-form-center button-container'>
-        <div className='input-form-row'>
-          <div>Fees to be paid to the Consultant (if applicable) </div>
-          <div>
-            <TextField
-              size='small'
-              onChange={onChange}
-              name='fee'
-              value={formData.fee}
-              disabled={disabled}
-            />
-          </div>
+
+      <div className='input-form-row-1'>
+        <div>Fees to be paid to the Consultant (if applicable) </div>
+        <div>
+          <TextField
+            size='small'
+            onChange={onChange}
+            name='fee'
+            value={formData.fee}
+            disabled={disabled}
+          />
         </div>
       </div>
       {approvalDetails.status && (
@@ -314,10 +338,26 @@ const RecruitmentForm2 = () => {
           </div>
         </div>
       )}
-      <div className='button-container'>
-        <Button variant='contained' color='primary' fullWidth>
-          Submit for Approval
-        </Button>
+    <div className='button-container' id='approve-button'>
+        {approvalDetails.status ? (
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={() => downloadPDF()}
+          >
+            Download Report
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={() => setOpenModal(true)}
+          >
+            Submit for Approval
+          </Button>
+        )}
       </div>
 
       {openModal && (

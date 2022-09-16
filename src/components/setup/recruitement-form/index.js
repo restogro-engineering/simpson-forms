@@ -200,18 +200,17 @@ const RecruitmentForm = () => {
           </div>
         </div>
       </div>
-      <div className='input-form-center button-container'>
-        <div className='input-form-row'>
-          <div>Fees to be paid to the Consultant (if applicable) </div>
-          <div>
-            <TextField
-              size='small'
-              onChange={onChange}
-              name='fee'
-              value={formData.fee}
-              disabled={disabled}
-            />
-          </div>
+
+      <div className='input-form-row-1'>
+        <div>Fees to be paid to the Consultant (if applicable) </div>
+        <div>
+          <TextField
+            size='small'
+            onChange={onChange}
+            name='fee'
+            value={formData.fee}
+            disabled={disabled}
+          />
         </div>
       </div>
       {approvalDetails.status && (
