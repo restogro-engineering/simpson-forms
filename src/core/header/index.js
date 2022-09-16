@@ -1,41 +1,74 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { IconButton, Drawer } from "@mui/material";
-import "./index.scss";
-import { clearOfflineData } from "../../utils/offline-services";
-import SideMenu from "../side-menu";
-import { MOBILE_MENU } from "../side-menu/config";
+/** @format */
+
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+} from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Logout from '@mui/icons-material/Logout';
+import './index.scss';
+import {
+  clearOffllineData,
+  getOfflineData,
+} from '../../utils/offline-services';
+import SideMenu from './side-menu';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [openMenu, setOpenMenu] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
 
+  useEffect(() => {
+    let user = getOfflineData('user');
+    setUserDetails(user);
+  }, []);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const logout = () => {
-    clearOfflineData("user");
-    navigate("/login");
+    clearOffllineData('user');
+    navigate('/login');
   };
   return (
     <div className='header-container'>
-      <div>
-        <IconButton onClick={() => setOpenMenu(true)}>
-          <MenuIcon style={{ color: "white" }} />
-        </IconButton>
-        LOGO
-      </div>
-      <div>
-        <IconButton onClick={logout}>
-          <LogoutIcon style={{ color: "white" }} />
-        </IconButton>
+      <div className='r-c'>
+        <SideMenu />
+        <img src={require('../../resources/logo.png')} width='120' />
       </div>
 
-      <Drawer open={openMenu} onClose={() => setOpenMenu(false)}>
-        <SideMenu
-          options={MOBILE_MENU}
-          onMenuCLick={() => setOpenMenu(false)}
-        />
-      </Drawer>
+      <div className='left-c'>
+        <Avatar>
+          <AccountCircleIcon />
+        </Avatar>
+        <Button
+          type='small'
+          variant='text'
+          onClick={(event) => setAnchorEl(event.currentTarget)}
+          endIcon={<KeyboardArrowDownIcon />}
+        >
+          {userDetails.name}
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={!!anchorEl}
+          onClose={handleClose}
+          onClick={handleClose}
+        >
+          <MenuItem onClick={logout}>
+            <ListItemIcon>
+              <Logout fontSize='small' />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </Menu>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,24 @@
+/** @format */
+
+.upload-file-form {
+  .header {
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    background: #00ACF4;    
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  .file-form-body {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 20px;
+    align-items: center;
+    padding: 20px;
+  }
+  .upload-file-names {
+    width: 100%;
+  }
+}

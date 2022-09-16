@@ -1,10 +1,11 @@
 export const Theme = {
     typography: {
-      fontFamily: ["Roboto-Regular"]
+      fontFamily: ["ProximaNovaAltLight-Regular"]
     },
     palette: {
       primary: {
-        main: "#306FFF"
+        main: "#00ACF4",
+        color:'#fff'
       }
     },
     overrides: {
@@ -16,7 +17,7 @@ export const Theme = {
           color: "#fff"
         },
         text: {
-          color: "#306FFF"
+          color: "#00ACF4"
         }
       },
       MuiListItemIcon: {

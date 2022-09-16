@@ -1,25 +1,30 @@
 /** @format */
 
-import React from 'react';
+import * as React from 'react';
+import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Actions from '../actions';
-import Defects from '../defects';
-import Complaint from '../complaint';
-import Parts from '../part';
-import ServiceEngineers from '../service-engineers';
-import MailingList from '../mailing-list';
-import Oems from '../oems';
-import OemNames from '../oem-names';
+import { getOfflineData } from '../../utils/offline-services';
+import { useNavigate } from 'react-router-dom';
+import RecruitmentForm from './recruitement-form';
+import RecruitmentForm2 from './recruitement-form';
+import './index.scss';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div hidden={value !== index} {...other}>
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
       {value === index && (
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -27,12 +32,31 @@ function TabPanel(props) {
   );
 }
 
-const Setup = () => {
-  const [value, setValue] = React.useState(0);
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+export default function BasicTabs() {
+  const [value, setValue] = React.useState(0);
+  const navigate = useNavigate();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    if (!getOfflineData('user')) {
+      navigate('/login');
+    }
+  }, []);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -40,47 +64,18 @@ const Setup = () => {
         <Tabs
           value={value}
           onChange={handleChange}
-          scrollButtons
-          variant='scrollable'
-          allowScrollButtonsMobile
+          aria-label='basic tabs example'
         >
-          <Tab label='Service Engineers' />
-          <Tab label='Actions' />
-          <Tab label='Defects' />
-          <Tab label='Complaint' />
-          <Tab label='Parts' />
-          <Tab label='Oem Accounts' />
-          <Tab label='Oem Names' />
-          <Tab label='Mailing List' />
+          <Tab label='Form1' {...a11yProps(0)} />
+          <Tab label='Form2' {...a11yProps(1)} />          
         </Tabs>
       </Box>
-
       <TabPanel value={value} index={0}>
-        <ServiceEngineers />
+        <RecruitmentForm />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Actions />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Defects />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <Complaint />
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        <Parts />
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        <Oems />
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        <OemNames />
-      </TabPanel>
-      <TabPanel value={value} index={7}>
-        <MailingList />
-      </TabPanel>
+        <RecruitmentForm2 />
+      </TabPanel>     
     </Box>
   );
-};
-
-export default Setup;
+}

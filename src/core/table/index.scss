@@ -1,24 +1,17 @@
-@import "../../styles/responsive.scss";
-@import "../../styles/variables.scss";
 .si-table-container {
   .si-header {
     .si-row {
       display: grid;
-      background: #102f77;
+      background: #00ACF4;
       border: 1px solid #e1e7ff;
       box-sizing: border-box;
       height: 63px;
       color: white;
       align-items: center;
       padding: 0px 20px;
-      @include respond-to("small") {
-        padding: 0px 10px;
-      }
     }
   }
   .si-body {
-    max-height: 454px;
-    overflow-y: scroll;
     .si-row {
       display: grid;
       border: 1px solid #e1e7ff;
@@ -26,30 +19,15 @@
       height: 43px;
       align-items: center;
       padding: 0px 20px;
-      @include respond-to("small") {
-        padding: 0px 10px;
-      }
-      .si-cell-mobile {
-        font-family: 'Roboto-Regular';
-        font-weight: 400;
-        font-size: 0.8rem;
-        line-height: 1.5;
-      }
-    }
-
-    .clickable {
-      cursor: pointer;
-      color: #306fff;
-    }
-    .no-records {
-      display: flex;
-      justify-content: center;
-      padding: 20px;
     }
   }
   .si-pagination {
     display: flex;
     justify-content: center;
     padding: 20px 0px;
+  }
+  .clickable {
+    cursor: pointer;
+    color: #00ACF4;
   }
 }

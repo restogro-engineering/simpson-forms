@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
@@ -11,7 +13,10 @@ import { toast } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [loginDetails, setLoginDetails] = useState({});
+  const [loginDetails, setLoginDetails] = useState({
+    email: '',
+    password: '',
+  });
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -28,9 +33,8 @@ const Login = () => {
   };
 
   const login = () => {
-    
-    setOfflineData('user', { user: 'mani' });
-     setOfflineData('tokens', {token:""});
+    setOfflineData('user', { user: {name:'Manikanta'} });
+    setOfflineData('tokens', { tokens: {} });
     navigate('/');
     return;
 
@@ -56,28 +60,30 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="left"></div>
-      <div className="right">
-        <div className="login-form">
-          <div className="title">Login</div>
+    <div className='login-container'>
+      <div className='left'>
+        {/* <img src={require('../../resources/info.png')} /> */}
+      </div>
+      <div className='right'>
+        <div className='login-form'>
+          <div className='title'>Login</div>
           <TextField
-            size="small"
-            label="Email"
-            name="email"
+            size='small'
+            label='Email'
+            name='email'
             value={loginDetails.email}
             onChange={onInputChange}
           />
           <TextField
-            size="small"
-            label="Password"
+            size='small'
+            label='Password'
             type={showPassword ? 'text' : 'password'}
-            name="password"
+            name='password'
             value={loginDetails.password}
             onChange={onInputChange}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position='end'>
                   <IconButton onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -86,15 +92,24 @@ const Login = () => {
             }}
           />
           <Button
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             onClick={login}
             disabled={!loginDetails.email || !loginDetails.password}
           >
             Login
           </Button>
+          {/* <Button
+            variant='text'
+            color='primary'
+            onClick={() => {
+              navigate('/register');
+            }}
+          >
+            Register
+          </Button> */}
           {loginDetails.errorMsg && (
-            <span className="error-msg">{loginDetails.errorMsg}</span>
+            <span className='error-msg'>{loginDetails.errorMsg}</span>
           )}
         </div>
       </div>

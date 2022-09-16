@@ -1,11 +1,11 @@
 export const setOfflineData = (key, data) => {
     if (data !== "" && data !== null && data !== undefined) {
-      localStorage.setItem(`simpson:${key}`, JSON.stringify(data));
+      localStorage.setItem(`subway:${key}`, JSON.stringify(data));
     }
   };
   
   export const getOfflineData = key => {
-    const data = localStorage.getItem(`simpson:${key}`);
+    const data = localStorage.getItem(`subway:${key}`);
     if (data !== "" && data !== null && data !== undefined) {
       return JSON.parse(data);
     } else {
@@ -13,8 +13,8 @@ export const setOfflineData = (key, data) => {
     }
   };
   
-  export const clearOfflineData = key => {
-    localStorage.removeItem(`simpson:${key}`);
+  export const clearOffllineData = key => {
+    localStorage.removeItem(`subway:${key}`);
   };
   
   export const clearSpidleOfflineData = startsWith => {

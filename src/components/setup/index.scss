@@ -1,0 +1,80 @@
+/** @format */
+
+@import '../../styles/responsive.scss';
+@import '../../styles/variables.scss';
+
+.table-container {
+  max-width: 1440px;
+  margin: auto;
+  .create-new {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 108px;
+    .label {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 40px;
+      letter-spacing: 0.1px;
+      color: #373f41;
+    }
+  }
+  .clickable {
+    cursor: pointer;
+    color: #306fff;
+  }
+  .title-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    .l-c {
+      display: flex;
+      align-items: center;
+      grid-gap: 20px;
+    }
+  }
+  .date-filter-row {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .r-c {
+      display: flex;
+      grid-gap: 20px;
+      align-items: center;
+    }
+  }
+}
+
+.items-container {
+  .si-row {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+.premix-container,
+.items-list-container,
+.recipes-container {
+  .si-row {
+    grid-template-columns: 1fr 1.5fr 1fr 0.5fr 0.5fr;
+  }
+}
+.items-list-container {
+  .close-icon {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .si-body {
+    max-height: 400px;
+    overflow: scroll;
+  }
+}
+
+.request-approval-modal {
+  .buttons-f {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

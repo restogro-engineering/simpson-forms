@@ -1,123 +1,187 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Overview from './overview';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './index.scss';
+import SiTable from '../../core/table';
+import { formatData, getDashboardUploadCOnfig, HeaderConfig } from './config';
+import { getOfflineData } from '../../utils/offline-services';
 import { invokeApi, HTTP_METHODS } from '../../utils/http-service';
 import { HOSTNAME, REST_URLS } from '../../utils/endpoints';
-import OtherInfo from './other-info';
-import { formatIndiaMapData } from './helper';
-import StateWise from './state-wise';
-import { useSearchParams } from 'react-router-dom';
-import TrendOverview from './trend-overview';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div hidden={value !== index} {...other}>
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+import { Button } from '@mui/material';
+import Select from 'react-select';
+import { exportToExcel } from '../../utils';
+import GmModal from './gm-modal';
+import { APPROVAL_LIST } from '../../utils/mock';
+import CustomModal from '../../core/modal';
 
 const Dashboard = () => {
-  const [value, setValue] = React.useState(0);
-  const [dashboardDetails, setDashboardDetails] = useState({});
-  const [engineDashboardDetails, setEngineDashboardDetails] = useState({});
-  const [ticketCounts, setTicketCounts] = useState({});
-  const [engineTicketCounts, setEngineTicketCounts] = useState({});
-  const [indiaMapData, setIndiaMapData] = useState([]);
+  const navigate = useNavigate();
+  const [pastTickets, setPastTickets] = useState(APPROVAL_LIST);
+  const [openComments, setOpenComments] = useState(null);
+  const [fileNames, setFileNames] = useState([]);
+  const [rmFileNames, setRMFileNames] = useState([]);
+  const [premixFileNames, setPremixFileNames] = useState([]);
+  const [bomFileNames, setDomFileNames] = useState([]);
+  const [salesFileNames, setSalesFileNames] = useState([]);
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  const [filters, setFilters] = useState({
+    page: 1,
+    limit: 10,
+  });
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  let data = searchParams.get('index');
 
-  React.useEffect(() => {
-    handleChange(0, +data);
-  }, [data]);
-
-  const loadData = () => {
-    invokeApi(HTTP_METHODS.GET, `${HOSTNAME}${REST_URLS.DASHBOARD}`, null).then(
-      (response) => {
-        setDashboardDetails(response);
-        if (response.stateWiseCounts) {
-          setIndiaMapData(formatIndiaMapData(response.stateWiseCounts));
-        }
-      }
-    );
-    invokeApi(HTTP_METHODS.GET, `${HOSTNAME}${REST_URLS.DASHBOARD}`, null, {
-      engineReplacement: true,
-    }).then((response) => {
-      setEngineDashboardDetails(response);
-    });
-
+  const loadData = (filtersObj) => {
     invokeApi(
       HTTP_METHODS.GET,
-      `${HOSTNAME}${REST_URLS.TICKETS_COUNTS}`,
-      null
-    ).then((response) => {
-      setTicketCounts(response);
-    });
-    invokeApi(
-      HTTP_METHODS.GET,
-      `${HOSTNAME}${REST_URLS.TICKETS_COUNTS}`,
+      `${HOSTNAME}${REST_URLS.GET_GM}`,
       null,
-      {
-        engineReplacement: true,
-      }
+      filtersObj
     ).then((response) => {
-      setEngineTicketCounts(response);
+      if (response.results) {
+        setPastTickets(response);
+      }
     });
   };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const loadFileName = () => {
+    invokeApi(
+      HTTP_METHODS.GET,
+      `${HOSTNAME}${REST_URLS.GET_FILE_NAMES}`,
+      null,
+      {
+        type: 'gm',
+      }
+    ).then((response) => {
+      if (response && response.length > 0) {
+        loadData({
+          ...filters,
+          fileName: response[0],
+        });
+
+        setFilters({
+          ...filters,
+          fileName: { label: response[0], value: response[0] },
+        });
+        setFileNames(response.map((op) => ({ label: op, value: op })));
+      }
+    });
+  };
+
+  const loadOtherFileName = () => {
+    invokeApi(
+      HTTP_METHODS.GET,
+      `${HOSTNAME}${REST_URLS.GET_FILE_NAMES}`,
+      null,
+      {
+        type: 'item',
+      }
+    ).then((response) => {
+      if (response && response.length > 0) {
+        setRMFileNames(response.map((op) => ({ label: op, value: op })));
+      }
+    });
+
+    invokeApi(
+      HTTP_METHODS.GET,
+      `${HOSTNAME}${REST_URLS.GET_FILE_NAMES}`,
+      null,
+      {
+        type: 'premix',
+      }
+    ).then((response) => {
+      if (response && response.length > 0) {
+        setPremixFileNames(response.map((op) => ({ label: op, value: op })));
+      }
+    });
+
+    invokeApi(
+      HTTP_METHODS.GET,
+      `${HOSTNAME}${REST_URLS.GET_FILE_NAMES}`,
+      null,
+      {
+        type: 'recipe',
+      }
+    ).then((response) => {
+      if (response && response.length > 0) {
+        setDomFileNames(response.map((op) => ({ label: op, value: op })));
+      }
+    });
+
+    invokeApi(
+      HTTP_METHODS.GET,
+      `${HOSTNAME}${REST_URLS.GET_FILE_NAMES}`,
+      null,
+      {
+        type: 'dashboard',
+      }
+    ).then((response) => {
+      if (response && response.length > 0) {
+        setSalesFileNames(response.map((op) => ({ label: op, value: op })));
+      }
+    });
+  };
+
+  const downloadData = () => {
+    invokeApi(HTTP_METHODS.GET, `${HOSTNAME}${REST_URLS.GET_GM}`, null, {
+      page: 1,
+      limit: pastTickets.totalPages,
+      fileName: filters.fileName.label,
+      isDownload: true,
+    }).then((response) => {
+      if (response.results) {
+        exportToExcel(formatData(response.results), 'price_list');
+        // exportToExcel(response.results, "gm_list");
+      }
+    });
+  };
+
+  const onRowClick = (data) => {    
+    const { comments = [] } = data;
+    setOpenComments(comments);
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <TabPanel value={value} index={0}>
-        <Overview
-          dashboardDetails={dashboardDetails}
-          ticketCounts={ticketCounts}
-        />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Overview
-          dashboardDetails={engineDashboardDetails}
-          ticketCounts={engineTicketCounts}
-        />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <OtherInfo dashboardDetails={dashboardDetails} index={2} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <StateWise
-          dashboardDetails={dashboardDetails}
-          indiaMapData={indiaMapData}
-        />
-      </TabPanel>
+    <div className='past-tickets-container'>
+      <div className='create-new'>
+        <span className='label'>My Work list</span>
+      </div>     
+      <SiTable
+        header={HeaderConfig}
+        data={pastTickets || []}
+        onClick={onRowClick}
+        // pageCount={pastTickets.totalPages}
+        onChange={(event, page) => {
+          setFilters({
+            ...filters,
+            page,
+          });
+          loadData({
+            ...filters,
+            page,
+          });
+        }}
+      ></SiTable>
 
-      {[4, 5, 6, 7].map((data) => {
-        return (
-          <TabPanel value={value} index={data}>
-            <OtherInfo dashboardDetails={dashboardDetails} index={data} />
-          </TabPanel>
-        );
-      })}
-      <TabPanel value={value} index={8}>
-        <TrendOverview />
-      </TabPanel>
-    </Box>
+      {openComments && (
+        <CustomModal title='Comments' onClose={() => setOpenComments(null)}>
+          <div className='comment-row'>
+            <span>Comment</span>
+            <spam>Comment By</spam>
+            <spam>Date</spam>
+          </div>
+          {openComments.map((comment) => {
+            return (
+              <div className='comment-row'>
+                <span>{comment.msg} </span>
+                <spam>{comment.by}</spam>
+                <spam>{comment.date}</spam>
+              </div>
+            );
+          })}
+        </CustomModal>
+      )}
+    </div>
   );
 };
 

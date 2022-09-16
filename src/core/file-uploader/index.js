@@ -2,17 +2,16 @@
 
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import PublishIcon from '@mui/icons-material/Publish';
 import './index.scss';
 import { IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import BackupIcon from '@mui/icons-material/Backup';
 import { invokeUploadFile } from '../../utils/http-service';
 import { HOSTNAME, REST_URLS } from '../../utils/endpoints';
 
-const SiFileUpload = ({ title, clsName, url, callBack, id }) => {
+const SubwayFileUpload = ({ title, url, clsName, callBack, onFileUpload }) => {
   const [file, setFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState('');
   const onFormSubmit = (e) => {
     e.preventDefault(); // Stop form submit
     fileUpload();
@@ -20,55 +19,42 @@ const SiFileUpload = ({ title, clsName, url, callBack, id }) => {
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
+    if (onFileUpload) {
+      onFileUpload(e.target.files[0]);
+    }
   };
 
   const fileUpload = () => {
     const formData = new FormData();
     formData.append('upload', file);
-    setUploadStatus('Uploading...');
-    return invokeUploadFile(
-      `${HOSTNAME}${REST_URLS.UPLOAD_FILES}${id}`,
-      formData
-    )
+    return invokeUploadFile(`${HOSTNAME}${url}`, formData)
       .then((response) => {
         if (response.status === 200) {
-          toast.info('Uploaded Successfully');
           setFile(null);
-          callBack && callBack();
-          setUploadStatus('');
+          callBack && callBack(response.data);
         } else {
           toast.error(
             (response.data && response.data.message) || 'Upload Failed'
           );
-          setUploadStatus('');
         }
       })
       .catch((err) => {
-        setUploadStatus('Upload Failed');
-        toast.error('Upload Failed');
+        toast.error('Upload failed err');
       });
   };
 
   return (
-    <form className={`spidle-upload-file ${clsName}`}>
+    <form className={`subway-upload-file ${clsName}`}>
       {file === null ? (
-        <IconButton
-          title='Attach file'
-          size='small'
-          style={{
-            background: '#000',
-            color: '#fff',
-            borderRadius: 0,
-            cursor: 'pointer',
-          }}
-        >
+        <>
           <label
             htmlFor='file-upload'
             className='MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary upload-button'
           >
-            Upload Documents <PublishIcon fontSize='small' />
+            <span className='fr-hide-mobile'>{`${title}`}</span>
+            <BackupIcon />
           </label>
-        </IconButton>
+        </>
       ) : (
         <label title={(file && file.name) || ''} className='uploaded-file-name'>
           {(file && file.name) || ''}
@@ -84,27 +70,23 @@ const SiFileUpload = ({ title, clsName, url, callBack, id }) => {
       />
       {file !== null && (
         <span>
-          <IconButton
-            color='primary'
-            onClick={onFormSubmit}
-            title='Upload'
-            disabled={uploadStatus}
-          >
-            <CheckCircleOutlineIcon />
-          </IconButton>
+          {!onFileUpload && (
+            <IconButton color='primary' onClick={onFormSubmit} title='Upload'>
+              <CheckCircleOutlineIcon />
+            </IconButton>
+          )}
           <IconButton
             color='primary'
             onClick={() => setFile(null)}
             title='Clear'
-            disabled={uploadStatus}
           >
-            <HighlightOffIcon />
+            <ClearIcon />
           </IconButton>
         </span>
       )}
-      {uploadStatus}
+      <div>{file && <img src={URL.createObjectURL(file)} width='160'  height="auto"/>}</div>
     </form>
   );
 };
 
-export default SiFileUpload;
+export default SubwayFileUpload;

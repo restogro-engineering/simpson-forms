@@ -1,97 +1,45 @@
 /** @format */
 
 @import '../../styles/responsive.scss';
+@import '../../styles/variables.scss';
 
-.overview-container {
-  background-color: #fff;
-  display: flex;
-  // flex-wrap: wrap;
-  grid-gap: 30px;
-  overflow-y: scroll;
-  max-height: calc(100vh - 120px);
-  padding: 10px;
-  .left-section,
-  .right-section {
+.past-tickets-container {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 60px;
+  .create-new {
     display: flex;
-    flex-direction: column;
-    grid-gap: 30px;
-  }
-}
-
-.bar-chart-container {
-  box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  .title {
-    font-size: 18px;
-    font-weight: bold;
-    padding-bottom: 40px;
-  }
-}
-
-.pic-chart-container {
-  box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  .title {
-    font-size: 18px;
-    font-weight: bold;
-    padding-bottom: 10px;
-  }
-}
-
-.other-info-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  @include respond-to('small') {
-    display: flex;
-    flex-direction: column;
-    grid-gap: 20px;
-  }
-}
-
-.trend-overview {
-  .trend-smaples {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-    .sample-image1 {
-      width: 556px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0px;
+    .label {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 40px;
+      letter-spacing: 0.1px;
+      color: #373f41;
     }
-    .sample-image2 {
-      height: 330px;
-      width: 556px;
-    }
-    @include respond-to('small') {
+    .l-c {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       grid-gap: 20px;
     }
-    .img-c {
-      position: relative;
-      .c-label1 {
-        position: absolute;
-        top: 120px;
-        left: 200px;
-        transform: rotate(335deg);
-        font-size: 24px;
-        color: red;
-      }
-    }
   }
-  .highlights-trend {
-    max-width: 364px;
-    .title {
-      font-weight: bold;
-      font-size: 20px;
-    }
-    .h-row {
-      display: grid;
-      grid-template-columns: 120px 40px 40px 40px;
-      gap: 20px;
-      border: 1px solid black;
-      .data {
-        padding: 5px;
-      }
-    }
+  .si-row {
+    grid-template-columns: 0.3fr 1fr 0.5fr 0.5fr 0.2fr;
   }
+  .clickable {
+    cursor: pointer;
+    color: #306fff;
+  }
+}
+
+.comment-row {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr 1fr;
+  gap: 20px;
+  height: 60px;
+  border-bottom: 1px solid lightgray;
+  align-items: center;
 }

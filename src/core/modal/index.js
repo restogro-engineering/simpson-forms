@@ -1,17 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import CancelIcon from "@mui/icons-material/Cancel";
 import "./index.scss";
 import { IconButton } from "@mui/material";
 
-const CustomModal = ({
-  title,
-  children,
-  onClose,
-  contentClassName,
-  closeOnOutsideClick,
-}) => {
-  let modalRef = useRef();
+const CustomModal = ({ title, children, onClose, contentClassName }) => {
   // to disable the scroll on body
   useEffect(() => {
     let element = document.getElementsByTagName("body");
@@ -24,39 +17,21 @@ const CustomModal = ({
       }
     };
   });
-  //close modal on outside click
-  useEffect(() => {
-    let handler = (event) => {
-      if (!modalRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
 
   return (
-    <div className="custom-modal-container">
-      <div className={`${contentClassName} modal-content`} ref={modalRef}>
+    <div className='custom-modal-container'>
+      <div className={`${contentClassName} modal-content`}>
         {title && (
-          <div
-            className="modal-header"
-            style={{
-              backgroundColor:
-                contentClassName && `${contentClassName.headerBackgroundColor}`,
-            }}
-          >
-            <span className="modal-title">{title}</span>
+          <div className='modal-header'>
+            <span className='modal-title'>{title}</span>
             {onClose && (
-              <IconButton className="close" onClick={onClose}>
+              <IconButton className='close' onClick={onClose}>
                 <CancelIcon style={{ color: "#fff", fontSize: 30 }} />
               </IconButton>
             )}
           </div>
         )}
-        <div className="modal-body">{children}</div>
+        <div className='modal-body'>{children}</div>
       </div>
     </div>
   );
@@ -65,7 +40,7 @@ const CustomModal = ({
 CustomModal.defaultProps = {};
 CustomModal.propTypes = {
   title: PropTypes.string,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func
 };
 
 export default CustomModal;

@@ -1,0 +1,39 @@
+@import "../../styles/responsive.scss";
+@import "../../styles/variables.scss";
+
+.login-container {
+  max-width: 1440px;
+  margin: auto;
+  display: flex;
+  .left {
+    width: 807px;
+    height: 100vh;
+    background: $bg-linear-blue;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  .right {
+    width: 633px;
+    height: 100vh;
+    background: $bg-main;
+    display: flex;
+    align-items: center;
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      grid-gap: 20px;
+      width: 420px;
+      margin: auto;
+      .title {        
+        font-style: normal;
+        font-weight: bold;
+        font-size: 48px;
+        line-height: 40px;
+        letter-spacing: 0.1px;
+        color: #373f41;
+      }
+    }
+  }
+}

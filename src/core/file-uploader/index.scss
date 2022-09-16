@@ -1,10 +1,5 @@
-/** @format */
-
-.spidle-upload-file {
-  max-width: 223px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  input[type='file'] {
+.subway-upload-file {
+  input[type="file"] {
     display: none;
   }
   .uploaded-file-name {
@@ -13,7 +8,8 @@
     position: relative;
     white-space: nowrap;
     font-size: 16px;
-    font-family: 'Roboto-Regular';
+    font-family: 'ProximaNovaAltLight-Regular'
+    
   }
 }
 
@@ -44,7 +40,7 @@
 
 // file upload
 
-.spidle-upload-file {
+.subway-upload-file {
   .file {
     position: relative;
     display: inline-block;
@@ -76,7 +72,7 @@
     -ms-user-select: none;
     user-select: none;
   }
-  .upload-button {
+  .upload-button{
     display: flex;
     align-items: center;
     grid-gap: 10px;

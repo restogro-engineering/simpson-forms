@@ -1,10 +1,12 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "../components/login";
-import PrivateRoute from "./private-route";
-import NotFound from "../components/not-found";
-import WorkList from "../components/work-list";
-import RecruitmentForm from "../components/recruitement-form";
-import RecruitmentForm2 from "../components/recruitement-form2";
+/** @format */
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from '../components/login';
+import PrivateRoute from './private-route';
+import NotFound from '../components/not-found';
+import Register from '../components/resgister';
+import Dashboard from '../components/dashboard';
+import Setup from '../components/setup';
 
 const AppRoutes = () => {
   return (
@@ -12,10 +14,10 @@ const AppRoutes = () => {
       <Router>
         <Routes>
           <Route exact path='/login' element={<Login />}></Route>
+          <Route exact path='/register' element={<Register />}></Route>
           <Route exact path='/' element={<PrivateRoute />}>
-            <Route exact path='/' element={<WorkList />} />
-            <Route exact path='/forms/:mode' element={<RecruitmentForm />} />
-            <Route exact path='/form2/:mode' element={<RecruitmentForm2 />} />
+            <Route exact path='/' element={<Dashboard />} />
+            <Route exact path='/form/:type/:form' element={<Setup />} />
           </Route>
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
