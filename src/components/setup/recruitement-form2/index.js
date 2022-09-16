@@ -56,16 +56,12 @@ const RecruitmentForm2 = () => {
   };
 
   const downloadPDF = () => {
-    const docElement = document.querySelector('#request');
-    html2canvas(
-      docElement +
-        +{
-          onclone: (document) => {
-            document.querySelector('#approve-button').style.visibility =
-              'hidden';
-          },
-        }
-    ).then((canvas) => {
+    const docElement = document.querySelector('#request-form');
+    html2canvas(docElement, {
+      onclone: (document) => {
+        document.querySelector('#approve-button').style.visibility = 'hidden';
+      },
+    }).then((canvas) => {
       var imgData = canvas.toDataURL('image/png');
       var pdf = new jsPDF('p', 'pt', [canvas.width, canvas.height]);
       var pdfWidth = pdf.internal.pageSize.getWidth();
@@ -76,7 +72,7 @@ const RecruitmentForm2 = () => {
   };
 
   return (
-    <div className='recruitment-form-container'>
+    <div className='recruitment-form-container' id="request-form">
       <div className='form-row'>
         <div>Simpson & Co Ltd., </div>
         <div>Chennai - 600002 </div>
