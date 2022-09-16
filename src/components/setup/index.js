@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import { getOfflineData } from '../../utils/offline-services';
 import { useNavigate } from 'react-router-dom';
 import RecruitmentForm from './recruitement-form';
-import RecruitmentForm2 from './recruitement-form';
+import RecruitmentForm2 from './recruitement-form2';
 import './index.scss';
 
 function TabPanel(props) {

@@ -33,7 +33,7 @@ const Login = () => {
   };
 
   const login = () => {
-    setOfflineData('user', { user: {name:'Manikanta'} });
+    setOfflineData('user', { name: 'Manikanta' });
     setOfflineData('tokens', { tokens: {} });
     navigate('/');
     return;
