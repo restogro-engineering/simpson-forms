@@ -34,3 +34,23 @@ export const debounce = (func, timeout = 300) => {
     }, timeout);
   };
 };
+
+// const saveImageToPdf = (idOfHtmlElement) => {
+//   var fbcanvas = document.getElementById(idOfHtmlElement);
+//   html2canvas($(fbcanvas), {
+//     onrendered: function (canvas) {
+//       var width = canvas.width;
+//       var height = canvas.height;
+//       var millimeters = {};
+//       millimeters.width = Math.floor(width * 0.264583);
+//       millimeters.height = Math.floor(height * 0.264583);
+
+//       var imgData = canvas.toDataURL('image/png');
+//       var doc = new jsPDF('p', 'mm', 'a4');
+//       doc.deletePage(1);
+//       doc.addPage(millimeters.width, millimeters.height);
+//       doc.addImage(imgData, 'PNG', 0, 0);
+//       doc.save('WebSiteScreen.pdf');
+//     },
+//   });
+// };

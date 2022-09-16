@@ -136,9 +136,15 @@ const Dashboard = () => {
     });
   };
 
-  const onRowClick = (data) => {    
+  const onRowClick = (data,type) => {    
     const { comments = [] } = data;
-    setOpenComments(comments);
+    if(type === 'ID'){
+      navigate('/form/edit/1');
+
+    }else{
+      setOpenComments(comments);
+    }
+    
   };
 
   return (

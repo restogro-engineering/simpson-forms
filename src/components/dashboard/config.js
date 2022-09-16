@@ -10,7 +10,7 @@ export const HeaderConfig = [
     onClick: true,
     render: (data, onClick) => {
       return (
-        <span className='clickable' onClick={() => onClick(data)}>
+        <span className='clickable' onClick={() => onClick(data,'ID')}>
           {data.id}
         </span>
       );
@@ -34,18 +34,7 @@ export const HeaderConfig = [
         </span>
       );
     },
-  },
-  {
-    label: 'Download',
-    key: 'comments',
-    render: (data, onClick) => {
-      return (
-        <IconButton onClick={() => onClick(data, 'DOWNLOAD')}>
-          <DownloadIcon />
-        </IconButton>
-      );
-    },
-  },
+  }
 ];
 
 // this is for dashbaord execl header

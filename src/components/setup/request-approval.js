@@ -9,8 +9,10 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import SubwayFileUpload from '../../core/file-uploader';
 
-const RequestApprovalModal = ({ onClose }) => {
+const RequestApprovalModal = ({ onClose, onSave }) => {
   const [status, setStatus] = useState('');
+  const [comments, setComments] = useState('');
+  const [file, setFile] = useState('');
 
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -38,13 +40,29 @@ const RequestApprovalModal = ({ onClose }) => {
           </RadioGroup>
         </FormControl>
         <div>
-          <TextareaAutosize minLength={100} minRows={5} fullWidth />
+          <TextareaAutosize
+            value={comments}
+            onChange={(e) => setComments(e.target.value)}
+            minLength={100}
+            minRows={5}
+            fullWidth
+          />
         </div>
 
-        <SubwayFileUpload title='Upload signature' />
+        <SubwayFileUpload
+          title='Upload signature'
+          onFileUpload={(file) => setFile(file)}
+        />
 
         <div className='buttons-f'>
-          <Button variant='contained'>Submit</Button>
+          <Button
+            variant='contained'
+            onClick={() => {
+              onSave(status, comments, file);
+            }}
+          >
+            Submit
+          </Button>
         </div>
       </div>
     </CustomModal>

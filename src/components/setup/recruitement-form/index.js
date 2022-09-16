@@ -1,4 +1,6 @@
 import { Button, TextareaAutosize, TextField } from '@mui/material';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { APPROVAL_LIST } from '../../../utils/mock';
@@ -9,10 +11,16 @@ const RecruitmentForm = () => {
   const { mode } = useParams();
   const [formData, setFormData] = useState({});
   const [openModal, setOpenModal] = useState(false);
+  const [approvalDetails, setApprovalDEtails] = useState({});
 
   useEffect(() => {
     if (mode === 'edit') {
       setFormData(APPROVAL_LIST[0]);
+      setApprovalDEtails({
+        status: APPROVAL_LIST[0].status,
+        comments: 'Request looks fine please go ahead',
+        file: require('../../../resources/logo.png'),
+      });
     }
   }, []);
 
@@ -25,8 +33,24 @@ const RecruitmentForm = () => {
 
   const disabled = mode === 'edit';
 
+  const downloadPDF = () => {
+    const docElement = document.querySelector('#request');
+    html2canvas(docElement, {
+      onclone: (document) => {
+        document.querySelector('#approve-button').style.visibility = 'hidden';
+      },
+    }).then((canvas) => {
+      var imgData = canvas.toDataURL('image/png');
+      var pdf = new jsPDF('p', 'pt', [canvas.width, canvas.height]);
+      var pdfWidth = pdf.internal.pageSize.getWidth();
+      var pdfHeight = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('mypdf.pdf');
+    });
+  };
+
   return (
-    <div className='recruitment-form-container'>
+    <div className='recruitment-form-container' id='request'>
       <div className='form-row'>
         <div>Simpson & Co Ltd., </div>
         <div>Chennai - 600002 </div>
@@ -190,17 +214,51 @@ const RecruitmentForm = () => {
           </div>
         </div>
       </div>
-      <div className='button-container'>
-        <Button
-          variant='contained'
-          color='primary'
-          fullWidth
-          onClick={() => setOpenModal(true)}
-        >
-          Submit for Approval
-        </Button>
+      {approvalDetails.status && (
+        <div className='request -details'>
+          <div>Request Status : {approvalDetails.status}</div>
+          <div>Approved By : Manikanata</div>
+          <div>Request comments : {approvalDetails.comments}</div>
+          <div>
+            Signature :
+            <img src={approvalDetails.file} width='160' height='auto' />
+          </div>
+        </div>
+      )}
+      <div className='button-container' id='approve-button'>
+        {approvalDetails.status ? (
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={() => downloadPDF()}
+          >
+            Download Report
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={() => setOpenModal(true)}
+          >
+            Submit for Approval
+          </Button>
+        )}
       </div>
-      {openModal && <RequestApprovalModal onClose={()=>setOpenModal(false)} />}
+      {openModal && (
+        <RequestApprovalModal
+          onClose={() => setOpenModal(false)}
+          onSave={(status, comments, file) => {
+            setApprovalDEtails({
+              status,
+              comments,
+              file: URL.createObjectURL(file),
+            });
+            setOpenModal(false);
+          }}
+        />
+      )}
     </div>
   );
 };
