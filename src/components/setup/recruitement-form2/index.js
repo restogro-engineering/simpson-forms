@@ -75,7 +75,6 @@ const RecruitmentForm2 = () => {
     });
   };
 
-  console.log("formData",formData)
   return (
     <div className='recruitment-form-container'>
       <div className='form-row'>
@@ -218,19 +217,6 @@ const RecruitmentForm2 = () => {
           </div>
         </div>
         <div className='f-row'>
-          <div className='f-col'>Basic</div>
-          <div className='f-col'></div>
-          <div className='f-col'>
-            <TextField
-              name='basic'
-              onChange={onChange}
-              value={formData.basic}
-              disabled={disabled}
-              size='small'
-            />
-          </div>
-        </div>
-        <div className='f-row'>
           <div className='f-col'>HRA</div>
           <div className='f-col'></div>
           <div className='f-col'>
@@ -338,7 +324,7 @@ const RecruitmentForm2 = () => {
           </div>
         </div>
       )}
-    <div className='button-container' id='approve-button'>
+      <div className='button-container' id='approve-button'>
         {approvalDetails.status ? (
           <Button
             variant='contained'
@@ -363,7 +349,14 @@ const RecruitmentForm2 = () => {
       {openModal && (
         <RequestApprovalModal
           onClose={() => setOpenModal(false)}
-          onSave={downloadPDF}
+          onSave={(status, comments, file) => {
+            setApprovalDEtails({
+              status,
+              comments,
+              file: file ? URL.createObjectURL(file) : '',
+            });
+            setOpenModal(false);
+          }}
         />
       )}
     </div>
