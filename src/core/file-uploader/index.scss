@@ -1,0 +1,84 @@
+/** @format */
+
+.spidle-upload-file {
+  max-width: 223px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  input[type='file'] {
+    display: none;
+  }
+  .uploaded-file-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    font-size: 16px;
+    font-family: 'Roboto-Regular';
+  }
+}
+
+.download-sample-file {
+  height: 40px;
+  margin: 0px 12px;
+  font-size: 30px;
+  a {
+    color: white;
+  }
+}
+.import-products-container {
+  .download-sample-file {
+    margin-top: 0px;
+  }
+}
+.user-warrning-msg-container {
+  text-align: center;
+  padding: 20px;
+  .question {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .user-warrning-msg {
+    margin-top: 15px;
+  }
+}
+
+// file upload
+
+.spidle-upload-file {
+  .file {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    height: 2.5rem;
+  }
+  .file input {
+    min-width: 14rem;
+    margin: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+  }
+  .file-custom {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+    line-height: 1.5;
+    color: #555;
+    background-color: #fff;
+    border: 0.075rem solid #ddd;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .upload-button {
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+  }
+}

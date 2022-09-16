@@ -1,0 +1,105 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import './index.scss';
+import { invokeApi, HTTP_METHODS } from '../../utils/http-service';
+import { HOSTNAME, REST_URLS } from '../../utils/endpoints';
+import { setOfflineData, getOfflineData } from '../../utils/offline-services';
+import { toast } from 'react-toastify';
+
+const Login = () => {
+  const navigate = useNavigate();
+  const [loginDetails, setLoginDetails] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (getOfflineData('user')) {
+      navigate('/');
+    }
+  }, []);
+
+  const onInputChange = (event) => {
+    setLoginDetails({
+      ...loginDetails,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const login = () => {
+    
+    setOfflineData('user', { user: 'mani' });
+     setOfflineData('tokens', {token:""});
+    navigate('/');
+    return;
+
+    let payload = {
+      email: loginDetails.email,
+      password: loginDetails.password,
+    };
+    invokeApi(HTTP_METHODS.POST, `${HOSTNAME}${REST_URLS.LOGIN}`, payload).then(
+      (response) => {
+        if (response.message) {
+          toast.error(response.message);
+          setLoginDetails({
+            ...loginDetails,
+            errorMsg: response.message,
+          });
+        } else {
+          response.user && setOfflineData('user', response.user);
+          response.tokens && setOfflineData('tokens', response.tokens);
+          navigate('/');
+        }
+      }
+    );
+  };
+
+  return (
+    <div className="login-container">
+      <div className="left"></div>
+      <div className="right">
+        <div className="login-form">
+          <div className="title">Login</div>
+          <TextField
+            size="small"
+            label="Email"
+            name="email"
+            value={loginDetails.email}
+            onChange={onInputChange}
+          />
+          <TextField
+            size="small"
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            value={loginDetails.password}
+            onChange={onInputChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={login}
+            disabled={!loginDetails.email || !loginDetails.password}
+          >
+            Login
+          </Button>
+          {loginDetails.errorMsg && (
+            <span className="error-msg">{loginDetails.errorMsg}</span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

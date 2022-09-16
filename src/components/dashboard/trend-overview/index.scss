@@ -1,0 +1,87 @@
+/** @format */
+
+@import '../../../styles/responsive.scss';
+.trend-overview {
+  .trend-header {
+    display: flex;
+    justify-content: space-between;
+    .logo {
+      width: auto;
+      height: 80px;
+    }
+    .pf-month {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      .pf-month-info {
+        background-color: #102f77;
+        color: white;
+        padding: 10px;
+        font-family: "Roboto-Regular";
+      }
+    }
+  }
+
+  .trend-smaples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    .sample-image1 {
+      width: 556px;
+    }
+    .sample-image2 {
+      height: 330px;
+      width: 556px;
+    }
+    @include respond-to('small') {
+      display: flex;
+      flex-direction: column;
+      grid-gap: 20px;
+    }
+    .img-c {
+      position: relative;
+      .c-label1 {
+        position: absolute;
+        top: 120px;
+        left: 200px;
+        transform: rotate(335deg);
+        font-size: 24px;
+        color: red;
+      }
+    }
+  }
+  .highlights-trend {
+    max-width: 364px;
+    .title {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .h-row {
+      display: grid;
+      grid-template-columns: 120px 40px 40px 40px;
+      gap: 20px;
+      border: 1px solid black;
+      .data {
+        padding: 5px;
+      }
+    }
+  }
+}
+.past-engine-replacement-tend {
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+    font-family: "Roboto-Regular";
+  }
+  .eng-rep-summary-table {
+    padding-bottom: 20px;
+    .st-row {
+      display: grid;
+      text-align: center;
+      grid-template-columns: 74px 60px 60px 60px 60px 48px 56px 58px 56px 60px 54px 54px 56px 56px 60px 60px 60px 60px;
+      div {
+        outline: 1px solid;
+      }
+    }
+  }
+}

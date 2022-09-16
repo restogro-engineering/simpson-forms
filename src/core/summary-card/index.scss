@@ -1,0 +1,63 @@
+@import '../../styles/responsive.scss';
+
+.summary-cards-container {
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+    padding-bottom: 10px;
+  }
+  .report-card-list {
+    display: flex;
+    grid-gap: 20px;
+    @include respond-to("small"){
+      flex-direction: column;
+    }
+  }
+  .report-card {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+      rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 30px;
+    border-radius: 10px;
+    min-width: 200px;
+    .icon-c {
+      background-color: #a03fbf;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      width: 40px;
+      justify-content: center;
+      border-radius: 10px;
+    }
+    .report-text-c {
+      display: flex;
+      grid-gap: 5px;
+      flex-direction: column;
+      padding-left: 10px;
+      .title-label,
+      .count {
+        font-size: 12px;
+        font-weight: 100;
+      }
+      .data {
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 190px;
+      }
+    }
+  }
+  .report-card:nth-child(2) {
+    .icon-c {
+      background-color: #51459d;
+    }
+  }
+  .report-card:nth-child(3) {
+    .icon-c {
+      background-color: #f98b6b;
+    }
+  }
+}

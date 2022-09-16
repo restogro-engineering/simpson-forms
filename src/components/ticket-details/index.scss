@@ -1,0 +1,201 @@
+@import "../../styles/responsive.scss";
+@import "../../styles/variables.scss";
+
+.ticket-details-container {
+  display: flex;
+  padding: 20px;
+  @include respond-to("small") {
+    flex-direction: column;
+  }
+  .left-section {
+    background: #102f77;
+    width: 270px;
+    padding: 20px;
+    color: white;
+    height: calc(100vh - 60px);
+    @include respond-to("small") {
+      width: auto;
+      height: 100%;
+    }
+  }
+  .middle-section {
+    width: 100%;
+  }
+}
+
+//basic-info-container
+
+.basic-info-container {
+  .tkt-id {
+    .label {
+      font-style: normal;
+      font-weight: normal;
+      line-height: 24px;
+      font-size: 16px;
+      letter-spacing: 0.2px;
+      color: #f2f2f2;
+    }
+    .id {
+      @extend .label;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    padding-top: 20px;
+    .info-section {
+      display: flex;
+      flex-direction: column;
+      grid-gap: 5px;
+      padding-bottom: 10px;
+      .value {
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #f8f8f8;
+        color: black;
+        padding: 5px;
+      }
+      .service-engineer{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+///time-line-container
+
+.time-line-info-container {
+  padding: 20px;
+  min-width: 350px;
+  background: white;
+  padding-right: 0px;
+  @include respond-to("small") {
+    height: auto;
+    padding: 0px;
+    padding-top: 10px;
+  }
+  .inspection-date {
+    padding-bottom: 18px;
+    border-bottom: 1px solid #efefef;
+    display: flex;
+    align-items: center;
+    grid-gap: 20px;
+  }
+  .time-line {
+    padding: 20px 40px;
+    height: calc(100vh - 300px);
+    overflow: scroll;
+    position: relative;
+    @include respond-to("small") {
+      height: auto;
+      padding: 10px;
+    }
+  }
+  .line1 {
+  }
+  .line2 {
+    background: #e1e7ff;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 2px 8px;
+    letter-spacing: 0.2px;
+    color: #102f77;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+  .time-c-extra{
+    min-height: 140px;
+  }
+}
+
+// form-details-container
+.form-details-container {
+  min-width: 300px;
+  padding: 20px;
+  background: white;  
+  padding-left: 0px;
+  @include respond-to("small") {
+    height: auto;
+    padding: 0px;
+    padding-top: 10px;
+  }
+  .severity {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #efefef;
+    display: flex;
+    align-items: center;
+    grid-gap: 20px;
+  }
+  .comments-section {
+    background: #e8e8e8;
+    padding: 10px;
+  }
+  .action-form {
+    padding: 20px;
+    background: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 20px;
+    height: calc(100vh - 80px);
+  }
+  .buttons-container {
+    display: flex;
+    grid-gap: 10px;
+    justify-content: center;
+  }
+  .drop-down-label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.1px;
+    color: #102f77;
+  }
+  .add-comment-bts {
+    display: flex;
+    grid-gap: 20px;
+    flex-direction: column;
+  }
+  .a002-buttons {
+    padding-top: 10px;
+  } 
+  .resolve-msg{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.si-select__menu{
+  z-index: 2 !important;
+}
+.si-select__control {
+  border: 0px !important;
+  background: lightgrey !important;
+  color: white !important;
+}
+.css-tj5bde-Svg {
+  color: black;
+}
+
+.pre-defect-code-stage{
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+}
+
+
+.reassign-container{
+  display: flex;
+  grid-gap: 20px;
+  flex-direction: column;
+  color: black;
+}

@@ -1,0 +1,14 @@
+.header-container {
+  background: #1a43a2;
+  color: #fff;
+  border: 1px solid #e1e7ff;
+  box-sizing: border-box;
+  height: 60px;
+  width: 100%;
+  display: flex; 
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
