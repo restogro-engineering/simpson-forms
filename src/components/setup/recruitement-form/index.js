@@ -2,27 +2,27 @@ import { Button, TextareaAutosize, TextField } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { APPROVAL_LIST } from '../../../utils/mock';
 import RequestApprovalModal from '../request-approval';
 import './index.scss';
 
-const RecruitmentForm = () => {
-  const { mode } = useParams();
+const RecruitmentForm = ({ user }) => {
+  const { mode, id = '' } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [openModal, setOpenModal] = useState(false);
-  const [approvalDetails, setApprovalDEtails] = useState({});
+
+  const { role } = user;
 
   useEffect(() => {
-    if (mode === 'edit') {
-      setFormData(APPROVAL_LIST[0]);
-      setApprovalDEtails({
-        status: APPROVAL_LIST[0].status,
-        comments: 'Request looks fine please go ahead',
-        file: require('../../../resources/logo.png'),
-      });
+    if (mode === 'edit' && id) {
+      setFormData(APPROVAL_LIST.find((r) => r.id === id) || {});
+    } else {
+      setFormData({});
     }
-  }, []);
+  }, [mode]);
 
   const onChange = (event) => {
     setFormData({
@@ -49,15 +49,57 @@ const RecruitmentForm = () => {
     });
   };
 
+  const submitRequest = () => {
+    if (role === 'Request') {
+      toast.info('Request Submitted successfully');
+      navigate('/');
+    } else {
+      setOpenModal(false);
+    }
+  };
+
+  const { comments = [] } = formData || {};
+
+  const displayApproved = () => {
+    const { formType, comments } = formData;
+    switch (formType) {
+      case '0':
+        return comments.length === 2;
+      case '1':
+        return comments.length === 2;
+      case '2':
+        return comments.length === 2;
+      default:
+        return false;
+    }
+  };
+
   return (
     <div className='recruitment-form-container' id='request'>
-      <div className='form-row'>
-        <div>Simpson & Co Ltd., </div>
-        <div>Chennai - 600002 </div>
+      <div className='form-header'>
+        <div className='l-c'>
+          <img
+            src={require('../../../resources/logo.png')}
+            className='form-logo'
+          />
+          <span>
+            No. 861, 862, Anna Salai,
+            <div>Border Thottam, Padupakkam, Triplicane,</div>
+            Chennai, Tamil Nadu 600002
+          </span>
+        </div>
+        <div className='r-c'>{new Date().toLocaleDateString()}</div>
       </div>
-      <div className='form-row'>
-        <div>Sr. VP(O) / President / Whole Time Director / CFO & CS </div>
-        <div>{new Date().toLocaleDateString()} </div>
+      <div className='signatureList'>
+        {comments.map((comment) => {
+          return (
+            <div className='signature-container'>
+              <div>{comment.by}</div>
+              <img src={comment.signature} className='signature-img' />
+              <span>{comment.date}</span>
+            </div>
+          );
+        })}
       </div>
       <div className='form-center'>
         <span>PROPOSAL FOR RECRUITMENT</span>
@@ -213,19 +255,8 @@ const RecruitmentForm = () => {
           />
         </div>
       </div>
-      {approvalDetails.status && (
-        <div className='request -details'>
-          <div>Request Status : {approvalDetails.status}</div>
-          <div>Approved By : Manikanata</div>
-          <div>Request comments : {approvalDetails.comments}</div>
-          <div>
-            Signature :
-            <img src={approvalDetails.file} width='160' height='auto' />
-          </div>
-        </div>
-      )}
       <div className='button-container' id='approve-button'>
-        {approvalDetails.status ? (
+        {mode === 'edit' && (
           <Button
             variant='contained'
             color='primary'
@@ -234,12 +265,13 @@ const RecruitmentForm = () => {
           >
             Download Report
           </Button>
-        ) : (
+        )}
+        {displayApproved() && (
           <Button
             variant='contained'
             color='primary'
             fullWidth
-            onClick={() => setOpenModal(true)}
+            onClick={() => submitRequest()}
           >
             Submit for Approval
           </Button>
@@ -248,11 +280,20 @@ const RecruitmentForm = () => {
       {openModal && (
         <RequestApprovalModal
           onClose={() => setOpenModal(false)}
-          onSave={(status, comments, file) => {
-            setApprovalDEtails({
-              status,
-              comments,
-              file: file ? URL.createObjectURL(file) : '',
+          onSave={(status, comment, file) => {
+            setFormData({
+              ...formData,
+              comments: [
+                ...comments,
+                {
+                  msg: comment,
+                  by: user.name,
+                  status: status,
+                  email: user.email,
+                  signature: file ? URL.createObjectURL(file) : '',
+                  date: new Date().toLocaleString(),
+                },
+              ],
             });
             setOpenModal(false);
           }}

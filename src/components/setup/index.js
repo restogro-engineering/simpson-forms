@@ -7,7 +7,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { getOfflineData } from '../../utils/offline-services';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import RecruitmentForm from './recruitement-form';
 import RecruitmentForm2 from './recruitement-form2';
 import './index.scss';
@@ -46,12 +46,16 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
+  const { formType = '0', mode } = useParams();
+  const [value, setValue] = React.useState(+formType);
   const navigate = useNavigate();
   const handleChange = (event, newValue) => {
+    if (mode === 'edit') {
+      return;
+    }
     setValue(newValue);
   };
-
+  const user = getOfflineData('user');
   React.useEffect(() => {
     if (!getOfflineData('user')) {
       navigate('/login');
@@ -67,15 +71,15 @@ export default function BasicTabs() {
           aria-label='basic tabs example'
         >
           <Tab label='Form1' {...a11yProps(0)} />
-          <Tab label='Form2' {...a11yProps(1)} />          
+          <Tab label='Form2' {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <RecruitmentForm />
+        <RecruitmentForm user={user} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <RecruitmentForm2 />
-      </TabPanel>     
+        <RecruitmentForm2 user={user} />
+      </TabPanel>
     </Box>
   );
 }

@@ -52,10 +52,35 @@
   .button-container {
     padding: 20px;
   }
-  .request-details{
+  .request-details {
     display: flex;
     flex-direction: column;
     grid-gap: 20px;
-
   }
+  .form-logo {
+    width: 160px;
+  }
+  .form-header {
+    display: flex;    
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 10px;
+    .l-c {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.signature-container{
+  display: flex;
+  flex-direction: column;
+  background-color: lightcyan;
+  padding: 10px;
+  width: 180px;
+  .signature-img{
+    width: 160px;
+    background-color: lightcyan;
+  }
+  margin: 10px;
 }

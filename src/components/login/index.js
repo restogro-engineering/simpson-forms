@@ -10,6 +10,7 @@ import { invokeApi, HTTP_METHODS } from '../../utils/http-service';
 import { HOSTNAME, REST_URLS } from '../../utils/endpoints';
 import { setOfflineData, getOfflineData } from '../../utils/offline-services';
 import { toast } from 'react-toastify';
+import { APP_USERS } from '../../utils/mock';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,9 +34,18 @@ const Login = () => {
   };
 
   const login = () => {
-    setOfflineData('user', { name: 'Manikanta' });
-    setOfflineData('tokens', { tokens: {} });
-    navigate('/');
+    const user = APP_USERS.find((u) => u.email === loginDetails.email);
+    if (user) {
+      setOfflineData('user', user);
+      setOfflineData('tokens', { tokens: {} });
+      navigate('/');
+    } else {
+      setLoginDetails({
+        ...loginDetails,
+        errorMsg: 'Invalid username/password',
+      });
+    }
+
     return;
 
     let payload = {

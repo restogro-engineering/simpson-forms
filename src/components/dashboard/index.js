@@ -30,7 +30,6 @@ const Dashboard = () => {
     limit: 10,
   });
 
-
   const loadData = (filtersObj) => {
     invokeApi(
       HTTP_METHODS.GET,
@@ -136,22 +135,20 @@ const Dashboard = () => {
     });
   };
 
-  const onRowClick = (data,type) => {    
+  const onRowClick = (data, type) => {
     const { comments = [] } = data;
-    if(type === 'ID'){
-      navigate('/form/edit/1');
-
-    }else{
+    if (type === 'ID') {
+      navigate(`/form/edit/${data.id}/${data.formType}`);
+    } else {
       setOpenComments(comments);
     }
-    
   };
 
   return (
     <div className='past-tickets-container'>
       <div className='create-new'>
         <span className='label'>My Work list</span>
-      </div>     
+      </div>
       <SiTable
         header={HeaderConfig}
         data={pastTickets || []}

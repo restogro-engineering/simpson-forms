@@ -17,7 +17,7 @@ const AppRoutes = () => {
           <Route exact path='/register' element={<Register />}></Route>
           <Route exact path='/' element={<PrivateRoute />}>
             <Route exact path='/' element={<Dashboard />} />
-            <Route exact path='/form/:mode/:form' element={<Setup />} />
+            <Route exact path='/form/:mode/:id/:formType' element={<Setup />} />
           </Route>
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
