@@ -24,7 +24,7 @@ export default function SideMenu() {
     if (text === 'My Work List') {
       navigate('/');
     } else {
-      navigate('/form/create/1');
+      navigate('/form/create/1/0');
     }
   };
 

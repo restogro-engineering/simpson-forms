@@ -148,6 +148,9 @@ const Dashboard = () => {
     <div className='past-tickets-container'>
       <div className='create-new'>
         <span className='label'>My Work list</span>
+        <Button variant='outlined' onClick={() => navigate('/form/create/1/0')}>
+          Create new Request
+        </Button>
       </div>
       <SiTable
         header={HeaderConfig}
