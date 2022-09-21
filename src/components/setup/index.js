@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import RecruitmentForm from './recruitement-form';
 import RecruitmentForm2 from './recruitement-form2';
 import './index.scss';
+import RecruitmentForm3 from './recruitement-form3';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,6 +54,7 @@ export default function BasicTabs() {
     if (mode === 'edit') {
       return;
     }
+    navigate(`/form/create/1/${newValue}`)
     setValue(newValue);
   };
   const user = getOfflineData('user');
@@ -72,6 +74,7 @@ export default function BasicTabs() {
         >
           <Tab label='Form1' {...a11yProps(0)} />
           <Tab label='Form2' {...a11yProps(1)} />
+          <Tab label='Form3' {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -79,6 +82,9 @@ export default function BasicTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <RecruitmentForm2 user={user} />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <RecruitmentForm3 user={user} />
       </TabPanel>
     </Box>
   );
