@@ -5,19 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import './index.scss';
 import SiTable from '../../core/table';
 import { formatData, getDashboardUploadCOnfig, HeaderConfig } from './config';
-import { getOfflineData } from '../../utils/offline-services';
+import { getOfflineData, setOfflineData } from '../../utils/offline-services';
 import { invokeApi, HTTP_METHODS } from '../../utils/http-service';
 import { HOSTNAME, REST_URLS } from '../../utils/endpoints';
 import { Button } from '@mui/material';
 import Select from 'react-select';
 import { exportToExcel } from '../../utils';
-import GmModal from './gm-modal';
 import { APPROVAL_LIST } from '../../utils/mock';
 import CustomModal from '../../core/modal';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [pastTickets, setPastTickets] = useState(APPROVAL_LIST);
+  const [pastTickets, setPastTickets] = useState([]);
   const [openComments, setOpenComments] = useState(null);
   const [fileNames, setFileNames] = useState([]);
   const [rmFileNames, setRMFileNames] = useState([]);
@@ -29,6 +28,16 @@ const Dashboard = () => {
     page: 1,
     limit: 10,
   });
+
+  useEffect(() => {
+    let tickets = getOfflineData('tickets');
+    if (tickets) {
+      setPastTickets(tickets);
+    } else {
+      setOfflineData('tickets', APPROVAL_LIST);
+      setPastTickets(APPROVAL_LIST);
+    }
+  }, []);
 
   const loadData = (filtersObj) => {
     invokeApi(

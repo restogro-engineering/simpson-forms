@@ -6,6 +6,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SubwayFileUpload from '../../../core/file-uploader';
 import { APPROVAL_LIST } from '../../../utils/mock';
+import {
+  getOfflineData,
+  setOfflineData,
+} from '../../../utils/offline-services';
 import RequestApprovalModal from '../request-approval';
 import './index.scss';
 
@@ -19,7 +23,8 @@ const RecruitmentForm3 = ({ user }) => {
 
   useEffect(() => {
     if (mode === 'edit' && id) {
-      setFormData(APPROVAL_LIST.find((r) => r.id === id) || {});
+      let tickets = getOfflineData('tickets') || APPROVAL_LIST;
+      setFormData(tickets.find((r) => r.id === id) || {});
     } else {
       setFormData({});
     }
@@ -50,7 +55,10 @@ const RecruitmentForm3 = ({ user }) => {
   };
 
   const submitRequest = () => {
-    if (role === 'Request') {
+    if (role === 'Request' || mode === 'create') {
+      let tickets = getOfflineData('tickets') || APPROVAL_LIST;
+      formData.id = tickets.length + 1;
+      setOfflineData('tickets', [...tickets, formData]);
       toast.info('Request Submitted successfully');
       navigate('/');
     } else {
@@ -95,7 +103,6 @@ const RecruitmentForm3 = ({ user }) => {
           {new Date().toLocaleDateString()}
         </div>
       </div>
-      <div className='text-center'>SPD SHANMUKA TECH PRIVATE LIMITED</div>
       <div className='signatureList'>
         {comments.map((comment) => {
           return (
@@ -332,7 +339,7 @@ const RecruitmentForm3 = ({ user }) => {
             Download Report
           </Button>
         )}
-        {displayApproved() && (
+        {mode !== 'edit' && (
           <Button
             variant='contained'
             color='primary'

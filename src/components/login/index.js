@@ -37,7 +37,7 @@ const Login = () => {
     const user = APP_USERS.find((u) => u.email === loginDetails.email);
     if (user) {
       setOfflineData('user', user);
-      setOfflineData('tokens', { tokens: {} });
+      setOfflineData('tokens', { tokens: {} });      
       navigate('/');
     } else {
       setLoginDetails({

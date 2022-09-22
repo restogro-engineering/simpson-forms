@@ -3,6 +3,7 @@ export const APPROVAL_LIST = [
     id: '1',
     submittedDate: '15/09/2022',
     status: 'Approved',
+    assignedTo: 'NA',
     nextStatus: '',
     comments: [
       {
@@ -29,7 +30,7 @@ export const APPROVAL_LIST = [
     candidateName: 'Harinarayanan',
     qualification: 'Some degree',
     experience: '6 Years',
-    formType:0,
+    formType: 0,
     details: 'Stipend',
     emoluments: '',
     offerStipend:
@@ -48,6 +49,7 @@ export const APPROVAL_LIST = [
     id: '2',
     submittedDate: '15/09/2022',
     status: 'Approved',
+    assignedTo: 'NA',
     nextStatus: '',
     comments: [
       {
@@ -67,7 +69,7 @@ export const APPROVAL_LIST = [
         email: 'wtd@gmail.com',
       },
     ],
-    formType:1,
+    formType: 1,
     position: 'Graduate Engineer Trainee',
     dept: 'MCD, ASP',
     vacancy: '3',
@@ -95,11 +97,13 @@ export const APPROVAL_LIST = [
     submittedDate: '15/09/2022',
     status: 'Rejected',
     nextStatus: 'Rejected',
+    assignedTo: 'Manikanta',
     comments: [
       {
         msg: 'Request not ok',
         by: 'Sr. VP(O)',
         status: 'Rejected',
+        signature: require('../resources/signature.png'),
         date: '17/09/2022',
       },
     ],
@@ -119,7 +123,7 @@ export const APPROVAL_LIST = [
     approvedBy: '',
     basic: 100,
     hra: 100,
-    formType:1,
+    formType: 1,
     conveyanceAllowance: 100,
     educationAllowance: 100,
     specialAllowance: 100,
@@ -131,6 +135,7 @@ export const APPROVAL_LIST = [
     submittedDate: '15/09/2022',
     status: 'Pending',
     nextStatus: '',
+    assignedTo: 'Manikanta',
     comments: [],
     position: 'Graduate Engineer Trainee',
     dept: 'MCD, ASP',
@@ -148,7 +153,7 @@ export const APPROVAL_LIST = [
     approvedBy: '',
     basic: 100,
     hra: 100,
-    formType:1,
+    formType: 1,
     conveyanceAllowance: 100,
     educationAllowance: 100,
     specialAllowance: 100,

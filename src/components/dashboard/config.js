@@ -21,6 +21,10 @@ export const HeaderConfig = [
     key: 'status',
   },
   {
+    label: 'Assigned To',
+    key: 'assignedTo',
+  },
+  {
     label: 'Submitted Date',
     key: 'submittedDate',
   },
@@ -30,7 +34,7 @@ export const HeaderConfig = [
     render: (data, onClick) => {
       return (
         <span className='clickable' onClick={() => onClick(data)}>
-          comments({data.comments.length})
+          comments({data?.comments?.length})
         </span>
       );
     },

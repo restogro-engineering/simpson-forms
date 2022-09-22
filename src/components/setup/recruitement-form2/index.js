@@ -63,6 +63,7 @@ const RecruitmentForm2 = ({ user }) => {
         // document.querySelector('#page2').style['margin-bottom'] = '60px';
         document.querySelector('#page1').className =
           'recruitment-form-container';
+          document.querySelector('#approver-comment').style.visibility = 'hidden';          
       },
     });
     const canvas2 = await html2canvas(docElement2, {
@@ -99,8 +100,8 @@ const RecruitmentForm2 = ({ user }) => {
 
   const { comments = [] } = formData || {};
 
-  const displayApproved = () => {
-    if (role === 'Request' || comments.find((c) => c.email === user.email)) {
+  const displayApproved = () => {    
+    if (role === 'Request' || comments.find((c) => c.email === user.email) ||  formData.status == 'Rejected') {
       return false;
     }
     const { formType } = formData;
@@ -136,11 +137,14 @@ const RecruitmentForm2 = ({ user }) => {
         <div className='signatureList'>
           {comments.map((comment) => {
             return (
-              <div className='signature-container'>
-                <div>{comment.by}</div>
-                <img src={comment.signature} className='signature-img' />
-                <span>{comment.date}</span>
-              </div>
+              <>
+                <div className='signature-container'>
+                  <div>{comment.by}</div>
+                  <img src={comment.signature} className='signature-img' />
+                  <span>{comment.date}</span>
+                </div>
+                <div id="approver-comment"> Comment: {comment.msg}</div>
+              </>
             );
           })}
         </div>

@@ -93,11 +93,14 @@ const RecruitmentForm = ({ user }) => {
       <div className='signatureList'>
         {comments.map((comment) => {
           return (
+            <>
             <div className='signature-container'>
               <div>{comment.by}</div>
               <img src={comment.signature} className='signature-img' />
               <span>{comment.date}</span>
             </div>
+            <div id="approver-comment"> Comment: {comment.msg}</div>
+          </>
           );
         })}
       </div>
