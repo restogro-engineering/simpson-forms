@@ -17,7 +17,12 @@ const RecruitmentForm3 = ({ user }) => {
   const { mode, id = '', formType } = useParams();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    submittedDate: '15/09/2022',
+    status: 'Pending',
+    nextStatus: '',
+    assignedTo: 'WTD_approver',
+  });
   const [buyerSignature, setBuyerSignature] = useState('');
   const { role, canApproveRequest = '' } = user;
 
@@ -57,8 +62,16 @@ const RecruitmentForm3 = ({ user }) => {
   const submitRequest = () => {
     if (role === 'Request' || mode === 'create') {
       let tickets = getOfflineData('tickets') || APPROVAL_LIST;
-      formData.id = tickets.length + 1;
-      setOfflineData('tickets', [...tickets, formData]);
+      formData.id = tickets.length + 1;      
+      let data = {        
+        ...formData,
+        submittedDate: new Date(),
+        status: 'Pending',
+        nextStatus: '',
+        assignedTo: 'WTD_approver',
+      };
+
+      setOfflineData('tickets', [...tickets, data]);
       toast.info('Request Submitted successfully');
       navigate('/');
     } else {
@@ -69,20 +82,19 @@ const RecruitmentForm3 = ({ user }) => {
   const { comments = [] } = formData || {};
 
   const displayApproved = () => {
-    debugger;
-    if (role === 'Request' || comments.find((c) => c.email === user.email)) {
-      return false;
+    if (mode !== 'edit') {
+      switch (`${formType}`) {
+        case '0':
+          return comments.length <= 2;
+        case '1':
+          return comments.length <= 2;
+        case '2':
+          return comments.length <= 2;
+        default:
+          return true;
+      }
     }
-    switch (`${formType}`) {
-      case '0':
-        return comments.length <= 2;
-      case '1':
-        return comments.length <= 2;
-      case '2':
-        return comments.length <= 2;
-      default:
-        return false;
-    }
+    return false;
   };
 
   return (
@@ -339,7 +351,7 @@ const RecruitmentForm3 = ({ user }) => {
             Download Report
           </Button>
         )}
-        {mode !== 'edit' && (
+        {displayApproved() && (
           <Button
             variant='contained'
             color='primary'

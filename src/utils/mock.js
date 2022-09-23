@@ -165,23 +165,29 @@ export const APPROVAL_LIST = [
 export const APP_USERS = [
   {
     id: '1',
-    role: 'CEO',
-    name: 'User CEO',
+    role: 'CFO',
+    name: 'CFO & CS_approver',
     email: 'ceo@gmail.com',
     canApproveRequest: true,
   },
   {
     id: '2',
     role: 'WTD',
-    name: 'User WTD',
+    name: 'WTD_approver',
     email: 'wtd@gmail.com',
     canApproveRequest: true,
   },
   {
     id: '3',
     role: 'Request',
-    name: 'User',
+    name: 'Simpson_user',
     email: 'request@gmail.com',
     canApproveRequest: false,
   },
 ];
+
+export const APPROVAL_CONFIG = {
+  0: [],
+  1: [],
+  2: ['WTD', 'CFO'],
+};

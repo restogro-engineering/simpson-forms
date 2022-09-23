@@ -10,7 +10,7 @@ export const HeaderConfig = [
     onClick: true,
     render: (data, onClick) => {
       return (
-        <span className='clickable' onClick={() => onClick(data,'ID')}>
+        <span className='clickable' onClick={() => onClick(data,'ID')} key={data.id}>
           {data.id}
         </span>
       );

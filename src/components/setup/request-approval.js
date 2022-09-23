@@ -23,14 +23,14 @@ const RequestApprovalModal = ({ onClose, onSave }) => {
       <div className='request-approval-modal'>
         <FormControl>
           <FormLabel id='demo-row-radio-buttons-group-label'>
-            Do you want to approve / Reject
+            Do you want to Approve / Reject
           </FormLabel>
 
           <RadioGroup row value={status} onChange={handleChange}>
             <FormControlLabel
-              value='Approve'
+              value='Approved'
               control={<Radio />}
-              label='Approve'
+              label='Approved'
             />
             <FormControlLabel
               value='Reject'

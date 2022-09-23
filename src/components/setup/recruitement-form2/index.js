@@ -13,7 +13,7 @@ const RecruitmentForm2 = ({ user }) => {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({});
-  const { role } = user;
+  const { role, canApproveRequest = '' } = user;
 
   useEffect(() => {
     if (mode === 'edit' && id) {
@@ -63,7 +63,7 @@ const RecruitmentForm2 = ({ user }) => {
         // document.querySelector('#page2').style['margin-bottom'] = '60px';
         document.querySelector('#page1').className =
           'recruitment-form-container';
-          document.querySelector('#approver-comment').style.visibility = 'hidden';          
+        document.querySelector('#approver-comment').style.visibility = 'hidden';
       },
     });
     const canvas2 = await html2canvas(docElement2, {
@@ -100,8 +100,12 @@ const RecruitmentForm2 = ({ user }) => {
 
   const { comments = [] } = formData || {};
 
-  const displayApproved = () => {    
-    if (role === 'Request' || comments.find((c) => c.email === user.email) ||  formData.status == 'Rejected') {
+  const displayApproved = () => {
+    if (
+      role === 'Request' ||
+      comments.find((c) => c.email === user.email) ||
+      formData.status == 'Rejected'
+    ) {
       return false;
     }
     const { formType } = formData;
@@ -143,7 +147,7 @@ const RecruitmentForm2 = ({ user }) => {
                   <img src={comment.signature} className='signature-img' />
                   <span>{comment.date}</span>
                 </div>
-                <div id="approver-comment"> Comment: {comment.msg}</div>
+                <div id='approver-comment'> Comment: {comment.msg}</div>
               </>
             );
           })}
@@ -394,16 +398,19 @@ const RecruitmentForm2 = ({ user }) => {
             Download Report
           </Button>
         )}
-        {displayApproved() && (
-          <Button
-            variant='contained'
-            color='primary'
-            fullWidth
-            onClick={() => submitRequest()}
-          >
-            Submit for Approval
-          </Button>
-        )}
+        {mode !==
+          'edit' && (
+            <Button
+              variant='contained'
+              color='primary'
+              fullWidth
+              onClick={() => submitRequest()}
+            >
+              {canApproveRequest && mode === 'edit'
+                ? 'Take Action'
+                : 'Submit for Approval'}
+            </Button>
+          )}
       </div>
 
       {openModal && (
