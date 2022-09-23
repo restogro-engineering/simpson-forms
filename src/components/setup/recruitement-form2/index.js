@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { APPROVAL_LIST } from '../../../utils/mock';
+import { getOfflineData, setOfflineData } from '../../../utils/offline-services';
 import RequestApprovalModal from '../request-approval';
 import './index.scss';
 
@@ -17,11 +18,12 @@ const RecruitmentForm2 = ({ user }) => {
 
   useEffect(() => {
     if (mode === 'edit' && id) {
-      setFormData(APPROVAL_LIST.find((r) => r.id === id) || {});
+      let tickets = getOfflineData('tickets') || APPROVAL_LIST;
+      setFormData(tickets.find((r) => r.id == id) || {});
     } else {
       setFormData({});
     }
-  }, [mode]);
+  }, []);
 
   const onChange = (event) => {
     setFormData({
@@ -90,7 +92,19 @@ const RecruitmentForm2 = ({ user }) => {
   };
 
   const submitRequest = () => {
-    if (role === 'Request') {
+    if (role === 'Request' || mode === 'create') {
+      let tickets = getOfflineData('tickets') || APPROVAL_LIST;
+      formData.id = tickets.length + 1;
+      let data = {
+        ...formData,
+        submittedDate: new Date(),
+        status: 'Pending',
+        nextStatus: '',
+        formType: 0,
+        assignedTo: 'WTD_approver',
+      };
+
+      setOfflineData('tickets', [...tickets, data]);
       toast.info('Request Submitted successfully');
       navigate('/');
     } else {
@@ -98,26 +112,27 @@ const RecruitmentForm2 = ({ user }) => {
     }
   };
 
+  const onApprove = (newData) => {
+    let data = getOfflineData('tickets') || APPROVAL_LIST;
+    let index = data.findIndex((r) => r.id == id);
+    if (index !== -1) {
+      data[index] = newData;
+      setOfflineData('tickets', data);
+      setFormData(newData);
+    }
+    toast.info('Request Updated Successfully');
+  };
+
   const { comments = [] } = formData || {};
 
   const displayApproved = () => {
-    if (
-      role === 'Request' ||
-      comments.find((c) => c.email === user.email) ||
-      formData.status == 'Rejected'
-    ) {
-      return false;
-    }
-    const { formType } = formData;
-    switch (`${formType}`) {
-      case '0':
-        return comments.length < 2;
-      case '1':
-        return comments.length < 2;
-      case '2':
-        return comments.length < 3;
-      default:
+    if (mode === 'edit' && role !== 'Request') {
+      if (comments.find((c) => c.email === user.email)) {
         return false;
+      }
+      return comments.length <= 2;
+    } else if (role !== 'Request') {
+      return true;
     }
   };
 
@@ -398,27 +413,46 @@ const RecruitmentForm2 = ({ user }) => {
             Download Report
           </Button>
         )}
-        {mode !==
-          'edit' && (
-            <Button
-              variant='contained'
-              color='primary'
-              fullWidth
-              onClick={() => submitRequest()}
-            >
-              {canApproveRequest && mode === 'edit'
-                ? 'Take Action'
-                : 'Submit for Approval'}
-            </Button>
-          )}
+        {role === 'Request' && mode === 'create' && (
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={() => submitRequest()}
+          >
+            {'Submit for Approval'}
+          </Button>
+        )}
+        {canApproveRequest && displayApproved() && (
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={() => submitRequest()}
+          >
+            {canApproveRequest && mode === 'edit'
+              ? 'Take Action'
+              : 'Submit for Approval'}
+          </Button>
+        )}
       </div>
-
       {openModal && (
         <RequestApprovalModal
           onClose={() => setOpenModal(false)}
           onSave={(status, comment, file) => {
-            setFormData({
+            const { comments = [] } = formData;
+            let statusData = {
+              status: `${status} By ${user.name}`,
+              assignedTo: 'CFO & CS_approver',
+            };
+
+            if (comments.length >= 1) {
+              statusData.status = status;
+              statusData.assignedTo = 'NA';
+            }
+            onApprove({
               ...formData,
+              ...statusData,
               comments: [
                 ...comments,
                 {

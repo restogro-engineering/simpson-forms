@@ -29,11 +29,11 @@ const RecruitmentForm3 = ({ user }) => {
   useEffect(() => {
     if (mode === 'edit' && id) {
       let tickets = getOfflineData('tickets') || APPROVAL_LIST;
-      setFormData(tickets.find((r) => r.id === id) || {});
+      setFormData(tickets.find((r) => r.id == id) || {});
     } else {
       setFormData({});
     }
-  }, [mode]);
+  }, []);
 
   const onChange = (event) => {
     setFormData({
@@ -47,7 +47,9 @@ const RecruitmentForm3 = ({ user }) => {
   const downloadPDF = async () => {
     const docElement = document.querySelector('#request-form');
     const canvas = await html2canvas(docElement, {
-      onclone: (document) => {},
+      onclone: (document) => {
+        document.querySelector('#approve-button').style.visibility = 'hidden';
+      },
     });
 
     var imgData = canvas.toDataURL('image/png');
@@ -62,12 +64,13 @@ const RecruitmentForm3 = ({ user }) => {
   const submitRequest = () => {
     if (role === 'Request' || mode === 'create') {
       let tickets = getOfflineData('tickets') || APPROVAL_LIST;
-      formData.id = tickets.length + 1;      
-      let data = {        
+      formData.id = tickets.length + 1;
+      let data = {
         ...formData,
         submittedDate: new Date(),
         status: 'Pending',
         nextStatus: '',
+        formType: 2,
         assignedTo: 'WTD_approver',
       };
 
@@ -79,22 +82,28 @@ const RecruitmentForm3 = ({ user }) => {
     }
   };
 
+  const onApprove = (newData) => {
+    let data = getOfflineData('tickets') || APPROVAL_LIST;
+    let index = data.findIndex((r) => r.id == id);
+    if (index !== -1) {
+      data[index] = newData;
+      setOfflineData('tickets', data);
+      setFormData(newData);
+    }
+    toast.info('Request Updated Successfully');
+  };
+
   const { comments = [] } = formData || {};
 
   const displayApproved = () => {
-    if (mode !== 'edit') {
-      switch (`${formType}`) {
-        case '0':
-          return comments.length <= 2;
-        case '1':
-          return comments.length <= 2;
-        case '2':
-          return comments.length <= 2;
-        default:
-          return true;
+    if (mode === 'edit' && role !== 'Request') {
+      if (comments.find((c) => c.email === user.email)) {
+        return false;
       }
+      return comments.length <= 2;
+    } else if (role !== 'Request') {
+      return true;
     }
-    return false;
   };
 
   return (
@@ -133,7 +142,7 @@ const RecruitmentForm3 = ({ user }) => {
             <TextField
               size='small'
               onChange={onChange}
-              name='position'
+              name='vendorName'
               value={formData.vendorName}
               disabled={disabled}
             />
@@ -158,7 +167,7 @@ const RecruitmentForm3 = ({ user }) => {
             <TextField
               size='small'
               onChange={onChange}
-              name='vacancy'
+              name='email'
               value={formData.email}
               disabled={disabled}
             />
@@ -170,7 +179,7 @@ const RecruitmentForm3 = ({ user }) => {
             <TextField
               size='small'
               onChange={onChange}
-              name='natureOfVacancy'
+              name='phone'
               value={formData.phone}
               disabled={disabled}
             />
@@ -351,7 +360,17 @@ const RecruitmentForm3 = ({ user }) => {
             Download Report
           </Button>
         )}
-        {displayApproved() && (
+        {role === 'Request' && mode === 'create' && (
+          <Button
+            variant='contained'
+            color='primary'
+            fullWidth
+            onClick={() => submitRequest()}
+          >
+            {'Submit for Approval'}
+          </Button>
+        )}
+        {canApproveRequest && displayApproved() && (
           <Button
             variant='contained'
             color='primary'
@@ -364,13 +383,23 @@ const RecruitmentForm3 = ({ user }) => {
           </Button>
         )}
       </div>
-
       {openModal && (
         <RequestApprovalModal
           onClose={() => setOpenModal(false)}
           onSave={(status, comment, file) => {
-            setFormData({
+            const { comments = [] } = formData;
+            let statusData = {
+              status: `${status} By ${user.name}`,
+              assignedTo: 'CFO & CS_approver',
+            };
+
+            if (comments.length >= 1) {
+              statusData.status = status;
+              statusData.assignedTo = 'NA';
+            }
+            onApprove({
               ...formData,
+              ...statusData,
               comments: [
                 ...comments,
                 {

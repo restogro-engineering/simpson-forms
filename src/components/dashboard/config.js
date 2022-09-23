@@ -1,7 +1,5 @@
 /** @format */
 
-import DownloadIcon from '@mui/icons-material/Download';
-import { IconButton } from '@mui/material';
 
 export const HeaderConfig = [
   {
@@ -10,7 +8,11 @@ export const HeaderConfig = [
     onClick: true,
     render: (data, onClick) => {
       return (
-        <span className='clickable' onClick={() => onClick(data,'ID')} key={data.id}>
+        <span
+          className='clickable'
+          onClick={() => onClick(data, 'ID')}
+          key={data.id}
+        >
           {data.id}
         </span>
       );
@@ -27,6 +29,13 @@ export const HeaderConfig = [
   {
     label: 'Submitted Date',
     key: 'submittedDate',
+    render: (data, onClick) => {
+      return (
+        <span onClick={() => onClick(data, 'ID')} key={data.id}>
+          {data.submittedDate && new Date(data.submittedDate).toLocaleDateString()}
+        </span>
+      );
+    },
   },
   {
     label: 'Comments',
@@ -38,7 +47,7 @@ export const HeaderConfig = [
         </span>
       );
     },
-  }
+  },
 ];
 
 // this is for dashbaord execl header

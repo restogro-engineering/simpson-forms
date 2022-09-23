@@ -1,7 +1,7 @@
 export const APPROVAL_LIST = [
   {
     id: '1',
-    submittedDate: '15/09/2022',
+    submittedDate: new Date(),
     status: 'Approved',
     assignedTo: 'NA',
     nextStatus: '',
@@ -47,7 +47,7 @@ export const APPROVAL_LIST = [
   },
   {
     id: '2',
-    submittedDate: '15/09/2022',
+    submittedDate: new Date(),
     status: 'Approved',
     assignedTo: 'NA',
     nextStatus: '',
@@ -94,7 +94,7 @@ export const APPROVAL_LIST = [
   },
   {
     id: '3',
-    submittedDate: '15/09/2022',
+    submittedDate: new Date(),
     status: 'Rejected',
     nextStatus: 'Rejected',
     assignedTo: 'Manikanta',
@@ -132,7 +132,7 @@ export const APPROVAL_LIST = [
   },
   {
     id: '4',
-    submittedDate: '15/09/2022',
+    submittedDate: new Date(),
     status: 'Pending',
     nextStatus: '',
     assignedTo: 'Manikanta',
