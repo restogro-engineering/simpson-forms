@@ -100,7 +100,7 @@ const RecruitmentForm2 = ({ user }) => {
         submittedDate: new Date(),
         status: 'Pending',
         nextStatus: '',
-        formType: 0,
+        formType: 1,
         assignedTo: 'WTD_approver',
       };
 
