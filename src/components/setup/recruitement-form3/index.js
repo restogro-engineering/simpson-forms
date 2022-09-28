@@ -72,6 +72,9 @@ const RecruitmentForm3 = ({ user }) => {
         nextStatus: '',
         formType: 2,
         assignedTo: 'WTD_approver',
+        buyerSignature: buyerSignature
+          ? URL.createObjectURL(buyerSignature)
+          : '',
       };
 
       setOfflineData('tickets', [...tickets, data]);
@@ -299,7 +302,7 @@ const RecruitmentForm3 = ({ user }) => {
         <div className='input-form-row'>
           <div>Name and Signature of Buyer</div>
           <div>
-            {!openModal && (
+            {!openModal && mode === 'create' && (
               <SubwayFileUpload
                 title='Signature'
                 onFileUpload={(file) => {
@@ -307,6 +310,9 @@ const RecruitmentForm3 = ({ user }) => {
                   setBuyerSignature(file);
                 }}
               />
+            )}
+            {mode === 'edit' && formData && formData.buyerSignature && (
+              <img src={formData.buyerSignature} width='160' height='auto' />
             )}
           </div>
         </div>
