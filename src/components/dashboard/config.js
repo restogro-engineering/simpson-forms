@@ -1,6 +1,5 @@
 /** @format */
 
-
 export const HeaderConfig = [
   {
     label: 'Ticket ID',
@@ -19,6 +18,13 @@ export const HeaderConfig = [
     },
   },
   {
+    label: 'Form Type',
+    key: 'formType',
+    render: (data) => {
+      return <span key={data.id}>{TYPES[data.formType]}</span>;
+    },
+  },
+  {
     label: 'Status',
     key: 'status',
   },
@@ -32,9 +38,17 @@ export const HeaderConfig = [
     render: (data, onClick) => {
       return (
         <span onClick={() => onClick(data, 'ID')} key={data.id}>
-          {data.submittedDate && new Date(data.submittedDate).toLocaleDateString()}
+          {data.submittedDate &&
+            new Date(data.submittedDate).toLocaleDateString()}
         </span>
       );
+    },
+  },
+  {
+    label: 'Requested By',
+    key: 'assignedTo',
+    render: () => {
+      return <span>Requester</span>;
     },
   },
   {
@@ -50,6 +64,11 @@ export const HeaderConfig = [
   },
 ];
 
+const TYPES = {
+  0: 'Proposal for recruitment',
+  1: 'Fitment proposal',
+  2: 'New vendor codification form',
+};
 // this is for dashbaord execl header
 export const formatData = (items) => {
   return (items || []).map((item) => {

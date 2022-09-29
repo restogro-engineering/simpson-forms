@@ -5,7 +5,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { APPROVAL_LIST } from '../../../utils/mock';
-import { getOfflineData, setOfflineData } from '../../../utils/offline-services';
+import {
+  getOfflineData,
+  setOfflineData,
+} from '../../../utils/offline-services';
 import RequestApprovalModal from '../request-approval';
 import './index.scss';
 
@@ -57,22 +60,11 @@ const RecruitmentForm2 = ({ user }) => {
   };
 
   const downloadPDF = async () => {
-    const docElement = document.querySelector('#page1');
-    const docElement2 = document.querySelector('#page2');
+    const docElement = document.querySelector('#request-form');
     const canvas = await html2canvas(docElement, {
       onclone: (document) => {
-        // document.querySelector('#page1').style.padding = '40px';
-        // document.querySelector('#page2').style['margin-bottom'] = '60px';
-        document.querySelector('#page1').className =
-          'recruitment-form-container';
-        document.querySelector('#approver-comment').style.visibility = 'hidden';
-      },
-    });
-    const canvas2 = await html2canvas(docElement2, {
-      onclone: (document) => {
-        // document.querySelector('#page2').style.padding = '40px';
-        document.querySelector('#page2').className =
-          'recruitment-form-container';
+        document.querySelector('#approve-button').style.visibility = 'hidden';
+        document.querySelector('#approve-button').style.visibility = 'hidden';
       },
     });
 
@@ -81,14 +73,8 @@ const RecruitmentForm2 = ({ user }) => {
     var pdfWidth = pdf.internal.pageSize.getWidth();
     var pdfHeight = pdf.internal.pageSize.getHeight();
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.addPage(1);
 
-    var imgData2 = canvas2.toDataURL('image/png');
-    var pdfWidth = pdf.internal.pageSize.getWidth();
-    var pdfHeight = pdf.internal.pageSize.getHeight();
-    pdf.addImage(imgData2, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-    pdf.save('mypdf.pdf');
+    pdf.save('fitment_proposal.pdf');
   };
 
   const submitRequest = () => {
@@ -153,7 +139,7 @@ const RecruitmentForm2 = ({ user }) => {
           </div>
           <div className='r-c'>{new Date().toLocaleDateString()}</div>
         </div>
-        <div className='signatureList'>
+        <div className='signature-list'>
           {comments.map((comment) => {
             return (
               <>
@@ -162,7 +148,7 @@ const RecruitmentForm2 = ({ user }) => {
                   <img src={comment.signature} className='signature-img' />
                   <span>{comment.date}</span>
                 </div>
-                <div id='approver-comment'> Comment: {comment.msg}</div>
+                {/* <div id='approver-comment'> Comment: {comment.msg}</div> */}
               </>
             );
           })}

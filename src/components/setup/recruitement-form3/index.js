@@ -48,7 +48,7 @@ const RecruitmentForm3 = ({ user }) => {
     const docElement = document.querySelector('#request-form');
     const canvas = await html2canvas(docElement, {
       onclone: (document) => {
-        document.querySelector('#approve-button').style.visibility = 'hidden';
+        document.querySelector('#approve-button').style.visibility = 'hidden';        
       },
     });
 
@@ -58,7 +58,7 @@ const RecruitmentForm3 = ({ user }) => {
     var pdfHeight = pdf.internal.pageSize.getHeight();
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-    pdf.save('mypdf.pdf');
+    pdf.save('new_vendor_codification_form.pdf');
   };
 
   const submitRequest = () => {
@@ -127,7 +127,7 @@ const RecruitmentForm3 = ({ user }) => {
           {new Date().toLocaleDateString()}
         </div>
       </div>
-      <div className='signatureList'>
+      <div className='signature-list'>
         {comments.map((comment) => {
           return (
             <div className='signature-container'>

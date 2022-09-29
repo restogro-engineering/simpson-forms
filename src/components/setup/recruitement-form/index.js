@@ -50,7 +50,7 @@ const RecruitmentForm = ({ user }) => {
       var pdfWidth = pdf.internal.pageSize.getWidth();
       var pdfHeight = pdf.internal.pageSize.getHeight();
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('mypdf.pdf');
+      pdf.save('proposal_for_recruitment.pdf');
     });
   };
 
@@ -63,7 +63,7 @@ const RecruitmentForm = ({ user }) => {
         submittedDate: new Date(),
         status: 'Pending',
         nextStatus: '',
-        formType: 1,
+        formType: 0,
         assignedTo: 'WTD_approver',
       };
 
@@ -115,7 +115,7 @@ const RecruitmentForm = ({ user }) => {
         </div>
         <div className='r-c'>{new Date().toLocaleDateString()}</div>
       </div>
-      <div className='signatureList'>
+      <div className='signature-list'>
         {comments.map((comment) => {
           return (
             <>
@@ -124,7 +124,7 @@ const RecruitmentForm = ({ user }) => {
                 <img src={comment.signature} className='signature-img' />
                 <span>{comment.date}</span>
               </div>
-              <div id='approver-comment'> Comment: {comment.msg}</div>
+              {/* <div id='approver-comment'> Comment: {comment.msg}</div> */}
             </>
           );
         })}
