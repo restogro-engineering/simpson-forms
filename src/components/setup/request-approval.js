@@ -49,10 +49,12 @@ const RequestApprovalModal = ({ onClose, onSave }) => {
           />
         </div>
 
-        <SubwayFileUpload
-          title='Upload signature'
-          onFileUpload={(file) => setFile(file)}
-        />
+        {status === 'Approved' && (
+          <SubwayFileUpload
+            title='Upload signature'
+            onFileUpload={(file) => setFile(file)}
+          />
+        )}
 
         <div className='buttons-f'>
           <Button
