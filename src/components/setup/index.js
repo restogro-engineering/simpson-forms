@@ -72,9 +72,9 @@ export default function BasicTabs() {
           onChange={handleChange}
           aria-label='basic tabs example'
         >
-          <Tab label='Form1' {...a11yProps(0)} />
-          <Tab label='Form2' {...a11yProps(1)} />
-          <Tab label='Form3' {...a11yProps(2)} />
+          <Tab label='Proposal for recruitment' {...a11yProps(0)} />
+          <Tab label='Fitment proposal' {...a11yProps(1)} />
+          <Tab label='New vendor codification form' {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
