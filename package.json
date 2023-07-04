@@ -1,7 +1,8 @@
 {
-  "name": "subway-web",
+  "name": "subway-forms",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://maniyedidi.github.io/restogro-engineering/simpson-forms",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -29,12 +30,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+  "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "clean-env": "aws s3 rm --recursive s3://subway.bellcorpstudio.com/",
-    "build-deploy": "npm run build && aws s3 cp --recursive ./build s3://subway.bellcorpstudio.com"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -53,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
