@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/restogro-engineering/simpson-forms/static/css/main.9c791d97.css",
-    "main.js": "/restogro-engineering/simpson-forms/static/js/main.63b9cfe9.js",
-    "static/js/703.a2541aef.chunk.js": "/restogro-engineering/simpson-forms/static/js/703.a2541aef.chunk.js",
-    "static/js/617.425ac412.chunk.js": "/restogro-engineering/simpson-forms/static/js/617.425ac412.chunk.js",
-    "static/js/787.4566c3a1.chunk.js": "/restogro-engineering/simpson-forms/static/js/787.4566c3a1.chunk.js",
-    "static/media/logo.png": "/restogro-engineering/simpson-forms/static/media/logo.d3f12056ac332380f1b3.png",
-    "static/media/ProximaNovaFont.otf": "/restogro-engineering/simpson-forms/static/media/ProximaNovaFont.7bc9ce404c297c24f210.otf",
-    "static/media/info.png": "/restogro-engineering/simpson-forms/static/media/info.dd8280d3a7f38a4620f3.png",
-    "static/media/ProximaNovaAltLight.otf": "/restogro-engineering/simpson-forms/static/media/ProximaNovaAltLight.3a7c914cbc8035135c38.otf",
-    "index.html": "/restogro-engineering/simpson-forms/index.html",
-    "main.9c791d97.css.map": "/restogro-engineering/simpson-forms/static/css/main.9c791d97.css.map",
-    "main.63b9cfe9.js.map": "/restogro-engineering/simpson-forms/static/js/main.63b9cfe9.js.map",
-    "703.a2541aef.chunk.js.map": "/restogro-engineering/simpson-forms/static/js/703.a2541aef.chunk.js.map",
-    "617.425ac412.chunk.js.map": "/restogro-engineering/simpson-forms/static/js/617.425ac412.chunk.js.map",
-    "787.4566c3a1.chunk.js.map": "/restogro-engineering/simpson-forms/static/js/787.4566c3a1.chunk.js.map"
+    "main.css": "/simpson-forms/static/css/main.26a58ea0.css",
+    "main.js": "/simpson-forms/static/js/main.1c1e506f.js",
+    "static/js/703.a2541aef.chunk.js": "/simpson-forms/static/js/703.a2541aef.chunk.js",
+    "static/js/617.425ac412.chunk.js": "/simpson-forms/static/js/617.425ac412.chunk.js",
+    "static/js/787.4566c3a1.chunk.js": "/simpson-forms/static/js/787.4566c3a1.chunk.js",
+    "static/media/logo.png": "/simpson-forms/static/media/logo.d3f12056ac332380f1b3.png",
+    "static/media/ProximaNovaFont.otf": "/simpson-forms/static/media/ProximaNovaFont.7bc9ce404c297c24f210.otf",
+    "static/media/info.png": "/simpson-forms/static/media/info.dd8280d3a7f38a4620f3.png",
+    "static/media/ProximaNovaAltLight.otf": "/simpson-forms/static/media/ProximaNovaAltLight.3a7c914cbc8035135c38.otf",
+    "index.html": "/simpson-forms/index.html",
+    "main.26a58ea0.css.map": "/simpson-forms/static/css/main.26a58ea0.css.map",
+    "main.1c1e506f.js.map": "/simpson-forms/static/js/main.1c1e506f.js.map",
+    "703.a2541aef.chunk.js.map": "/simpson-forms/static/js/703.a2541aef.chunk.js.map",
+    "617.425ac412.chunk.js.map": "/simpson-forms/static/js/617.425ac412.chunk.js.map",
+    "787.4566c3a1.chunk.js.map": "/simpson-forms/static/js/787.4566c3a1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9c791d97.css",
-    "static/js/main.63b9cfe9.js"
+    "static/css/main.26a58ea0.css",
+    "static/js/main.1c1e506f.js"
   ]
 }
